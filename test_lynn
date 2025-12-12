@@ -1,1 +1,504 @@
-hello test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standardized Analytics Framework Proposal - PDF Ready</title>
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --light-blue: #eff6ff;
+            --dark-blue: #1e3a8a;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-color: #d1d5db;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--light-blue);
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-print {
+            background-color: #059669;
+        }
+        
+        .btn-print:hover {
+            background-color: #047857;
+        }
+        
+        .btn-download {
+            background-color: #7c3aed;
+        }
+        
+        .btn-download:hover {
+            background-color: #6d28d9;
+        }
+        
+        header {
+            border-bottom: 3px solid var(--primary-blue);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: var(--primary-blue);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 8px;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary-blue);
+            page-break-inside: avoid;
+        }
+        
+        h2 {
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            page-break-after: avoid;
+        }
+        
+        h3 {
+            color: var(--dark-blue);
+            margin: 20px 0 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            overflow: hidden;
+            page-break-inside: avoid;
+        }
+        
+        th {
+            background-color: var(--primary-blue);
+            color: white;
+            text-align: left;
+            padding: 15px;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--light-blue);
+        }
+        
+        .highlight {
+            background-color: var(--light-blue);
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-blue);
+            margin: 20px 0;
+        }
+        
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .team-member {
+            background-color: var(--light-blue);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            color: var(--dark-blue);
+            border: 1px solid var(--secondary-blue);
+        }
+        
+        .approval-section {
+            background-color: var(--light-blue);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid var(--primary-blue);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* Print-specific styles */
+        @media print {
+            .controls {
+                display: none !important;
+            }
+            
+            body {
+                padding: 0;
+                max-width: 100%;
+            }
+            
+            section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+            
+            table {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            
+            h2 {
+                page-break-after: avoid;
+            }
+            
+            .btn {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 15px;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        /* Watermark for draft version */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 5rem;
+            color: rgba(30, 64, 175, 0.1);
+            z-index: -1;
+            pointer-events: none;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+    </style>
+    
+    <!-- Include jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="watermark">PROPOSAL</div>
+    
+    <div class="controls">
+        <button class="btn btn-print" onclick="window.print()">
+            📄 Print to PDF
+        </button>
+        <button class="btn btn-download" onclick="generatePDF()">
+            ⬇️ Download PDF
+        </button>
+        <button class="btn" onclick="openPreview()">
+            👁️ Preview PDF
+        </button>
+    </div>
+    
+    <header>
+        <h1>Standardized Analytics Framework Proposal</h1>
+        <div class="subtitle">Consolidating business analytics requests to create efficiency, consistency, and a single source of truth</div>
+        <div class="subtitle">Document ID: SAF-PROP-2023-001 | Version: 1.0 | Date: <span id="current-date"></span></div>
+    </header>
+    
+    <section id="executive-summary">
+        <h2>1. Executive Summary</h2>
+        <p>We have identified a fragmented approach to how internal stakeholders request and receive critical business statistics (e.g., Pro/Premium stats, consumption data, audit logs). This ad-hoc process leads to redundant data pulls, inconsistent metric definitions, and inefficient use of engineering resources.</p>
+        <p>This proposal outlines a plan to consolidate existing needs, standardize our reporting mechanisms, and establish a single source of truth for key business metrics. We seek approval to implement the proposed standardized solution.</p>
+    </section>
+    
+    <section id="current-challenges">
+        <h2>2. Current Challenges</h2>
+        <ul>
+            <li><strong>Inefficiency:</strong> Engineering and data teams frequently handle manual, repetitive requests for similar data points.</li>
+            <li><strong>Inconsistency:</strong> Different teams may receive slightly different figures for the same metric due to varying extraction methods.</li>
+            <li><strong>Lack of Visibility:</strong> Stakeholders often do not know what data is available or who to ask, leading to delayed decision-making.</li>
+            <li><strong>Security/Compliance Risk:</strong> Ad-hoc data exports increase the risk of data mishandling or inconsistent audit trails.</li>
+        </ul>
+    </section>
+    
+    <section id="proposed-solution">
+        <h2>3. Proposed Solution: The "Standardized Analytics Framework"</h2>
+        <p>Our goal is to move from ad-hoc requests to a structured, self-service model.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Initiative</th>
+                    <th>Description</th>
+                    <th>Benefit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Centralized Data Intake</strong></td>
+                    <td>Implement the proposed form template (Reference: Q1b Identification) as the sole input method for new data requests.</td>
+                    <td>Single source of requirements, clearer prioritization.</td>
+                </tr>
+                <tr>
+                    <td><strong>Standardized Metric Definitions</strong></td>
+                    <td>Define and document a consistent definition for common metrics (e.g., "Monthly Active User," "Premium Asset Count").</td>
+                    <td>Ensures data consistency and trust in reporting.</td>
+                </tr>
+                <tr>
+                    <td><strong>Tiered Delivery System</strong></td>
+                    <td>Implement a tiered approach to data delivery:</td>
+                    <td>Aligns delivery method with urgency/audience.</td>
+                </tr>
+                <tr>
+                    <td><strong>Tier 1: Self-Service UI Dashboard</strong></td>
+                    <td>For high-demand, high-frequency metrics (User stats, Consumption).</td>
+                    <td>Empowers stakeholders with real-time access; reduces engineering burden.</td>
+                </tr>
+                <tr>
+                    <td><strong>Tier 2: Standardized Export API/Tool</strong></td>
+                    <td>For data exports (Audit logs, billing data) that require scheduled or manual download but adhere to a standard format.</td>
+                    <td>Secure, consistent data exportation mechanism.</td>
+                </tr>
+                <tr>
+                    <td><strong>Exclude Internal DevOps Metrics</strong></td>
+                    <td>Scope this project only for business/user-facing metrics. System performance metrics will remain with DevOps monitoring tools.</td>
+                    <td>Clear project scope; prevents overlap with existing monitoring tools.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    
+    <section id="resources-timeline">
+        <h2>4. Required Resources and Timeline</h2>
+        <p>We require approval to allocate <strong>[X] engineering days</strong> and coordination time from the assigned team members over the next <strong>[Y] weeks</strong> to implement this framework.</p>
+        
+        <div class="highlight">
+            <h3>Assigned Team Members:</h3>
+            <div class="team-members">
+                <div class="team-member">@LI Munster</div>
+                <div class="team-member">@ZHENG Ang</div>
+                <div class="team-member">@Jena Preetidipa</div>
+            </div>
+        </div>
+        
+        <h3>Expected Timeline</h3>
+        <ol>
+            <li><strong>Week 1-2:</strong> Requirements gathering and metric definitions</li>
+            <li><strong>Week 3-4:</strong> Centralized intake form and dashboard design</li>
+            <li><strong>Week 5-7:</strong> Development of self-service dashboard</li>
+            <li><strong>Week 8-9:</strong> Development of standardized export API/tool</li>
+            <li><strong>Week 10:</strong> Testing, documentation, and rollout</li>
+        </ol>
+    </section>
+    
+    <section id="approval-request" class="approval-section">
+        <h2>5. PSM Approval Requested</h2>
+        <p>We request approval to proceed with the implementation of the Standardized Analytics Framework.</p>
+        <div style="margin: 30px 0; padding: 20px; background-color: white; border-radius: 8px;">
+            <h3>Approval Signatures</h3>
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-top: 20px;">
+                <div style="width: 45%; min-width: 250px; margin-bottom: 20px;">
+                    <p><strong>Approved by:</strong></p>
+                    <div style="margin-top: 40px; border-top: 1px solid #000; width: 80%;"></div>
+                    <p style="margin-top: 5px;">Name & Signature</p>
+                    <div style="margin-top: 10px; border-top: 1px solid #000; width: 80%;"></div>
+                    <p style="margin-top: 5px;">Date</p>
+                </div>
+                <div style="width: 45%; min-width: 250px; margin-bottom: 20px;">
+                    <p><strong>Project Sponsor:</strong></p>
+                    <div style="margin-top: 40px; border-top: 1px solid #000; width: 80%;"></div>
+                    <p style="margin-top: 5px;">Name & Signature</p>
+                    <div style="margin-top: 10px; border-top: 1px solid #000; width: 80%;"></div>
+                    <p style="margin-top: 5px;">Date</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>Standardized Analytics Framework Proposal | Confidential & Proprietary</p>
+        <p>This document contains confidential information and is intended only for the individuals to whom it is addressed.</p>
+    </footer>
+
+    <script>
+        // Set current date
+        const currentDate = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        document.getElementById('current-date').textContent = currentDate;
+        
+        // Generate PDF using jsPDF
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const element = document.body;
+            
+            // Show loading message
+            const originalContent = element.innerHTML;
+            const loadingDiv = document.createElement('div');
+            loadingDiv.innerHTML = '<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 9999; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: #1e40af;"><div>Generating PDF... Please wait.</div></div>';
+            document.body.appendChild(loadingDiv);
+            
+            // Use html2canvas to capture the content
+            html2canvas(element, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                width: element.scrollWidth,
+                height: element.scrollHeight,
+                windowWidth: element.scrollWidth,
+                windowHeight: element.scrollHeight
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 210; // A4 width in mm
+                const pageHeight = 297; // A4 height in mm
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                
+                let heightLeft = imgHeight;
+                let position = 0;
+                
+                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+                
+                // Add additional pages if needed
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    doc.addPage();
+                    doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                
+                // Remove loading message
+                document.body.removeChild(loadingDiv);
+                
+                // Save the PDF
+                doc.save('Standardized-Analytics-Framework-Proposal.pdf');
+            });
+        }
+        
+        // Open print preview
+        function openPreview() {
+            window.print();
+        }
+        
+        // Add print event listener
+        window.addEventListener('beforeprint', (event) => {
+            // Add header and footer for print
+            document.body.insertAdjacentHTML('beforeend', `
+                <div style="display: none;">
+                    <div id="print-header" style="position: fixed; top: 0; left: 0; width: 100%; text-align: center; padding: 10px; border-bottom: 1px solid #ccc; background: #f5f5f5; font-size: 0.8rem;">
+                        Standardized Analytics Framework Proposal - Confidential
+                    </div>
+                    <div id="print-footer" style="position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; padding: 10px; border-top: 1px solid #ccc; background: #f5f5f5; font-size: 0.7rem;">
+                        Page <span class="pageNumber"></span> of <span class="totalPages"></span> | Generated on ${currentDate}
+                    </div>
+                </div>
+            `);
+        });
+        
+        // Add after print event listener
+        window.addEventListener('afterprint', (event) => {
+            // Remove print header and footer
+            const printHeader = document.getElementById('print-header');
+            const printFooter = document.getElementById('print-footer');
+            if (printHeader) printHeader.remove();
+            if (printFooter) printFooter.remove();
+        });
+    </script>
+</body>
+</html>

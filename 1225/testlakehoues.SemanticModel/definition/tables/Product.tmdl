@@ -1,0 +1,25 @@
+table Product
+	lineageTag: 4e73ff4f-c353-420c-82c9-27cfb8840e49
+	sourceLineageTag: [dbo].[Product]
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 09ac6fcd-9685-4723-aba4-adc9c5f1a221
+		sourceLineageTag: ProductKey
+		summarizeBy: count
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Product-f69d0c6c-2138-4705-b295-b93c53879b5e = entity
+		mode: directLake
+		source
+			entityName: Product
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
+	annotation IsTableInBiModel = True
+

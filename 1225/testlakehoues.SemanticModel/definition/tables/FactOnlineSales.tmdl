@@ -1,0 +1,137 @@
+table FactOnlineSales
+	lineageTag: 8f27d14b-2ce7-49a0-871f-c3bdd67ede15
+	sourceLineageTag: [dbo].[FactOnlineSales]
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 35049f5e-05d4-4d7e-b0e7-ae945ba0ca60
+		sourceLineageTag: CustomerKey
+		summarizeBy: count
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d7ba877f-f411-4cb3-8009-2d5f41da5ec9
+		sourceLineageTag: DateKey
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeliveryDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4fc0df60-64a0-46e6-a7ee-d37bbc66b885
+		sourceLineageTag: DeliveryDate
+		summarizeBy: none
+		sourceColumn: DeliveryDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiscountAmount
+		dataType: double
+		lineageTag: 213fc09e-7f3b-4234-8fdb-63daa27942ac
+		sourceLineageTag: DiscountAmount
+		summarizeBy: sum
+		sourceColumn: DiscountAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DiscountQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 10dbc3c9-dfcc-4fb1-a968-9372cf720615
+		sourceLineageTag: DiscountQuantity
+		summarizeBy: sum
+		sourceColumn: DiscountQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column OnlineSalesKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 1fee6c8e-86c6-4920-8cbf-2a92b1ba5c8e
+		sourceLineageTag: OnlineSalesKey
+		summarizeBy: count
+		sourceColumn: OnlineSalesKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 40d71502-85b4-4c35-ae6b-194758676d71
+		sourceLineageTag: ProductKey
+		summarizeBy: count
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReturnAmount
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f1fe2d8-c7d6-4069-8537-856339440b3a
+		sourceLineageTag: ReturnAmount
+		summarizeBy: sum
+		sourceColumn: ReturnAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReturnQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: de65f359-6dd7-43bd-bcde-55a923da9d3c
+		sourceLineageTag: ReturnQuantity
+		summarizeBy: sum
+		sourceColumn: ReturnQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesAmount
+		dataType: double
+		lineageTag: 3a7191fd-33e9-4015-b6ed-594fe2a47498
+		sourceLineageTag: SalesAmount
+		summarizeBy: sum
+		sourceColumn: SalesAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SalesQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 03540b6d-8beb-49d7-bc8f-7d3273f9bac4
+		sourceLineageTag: SalesQuantity
+		summarizeBy: sum
+		sourceColumn: SalesQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column StoreKey
+		dataType: int64
+		formatString: 0
+		lineageTag: fd217708-b0fd-4454-80b8-a1a7c420e319
+		sourceLineageTag: StoreKey
+		summarizeBy: count
+		sourceColumn: StoreKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactOnlineSales-c371be72-6520-4fb1-85ca-25245372770f = entity
+		mode: directLake
+		source
+			entityName: FactOnlineSales
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
+	annotation IsTableInBiModel = True
+

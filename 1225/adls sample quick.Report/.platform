@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "adls sample quick"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "443cd8be-ce3a-8820-4fb5-679bf272cfd6"
+  }
+}

@@ -1,0 +1,25 @@
+table Date
+	lineageTag: 8018fd24-36e7-4ebe-885e-b1b5cb6451ce
+	sourceLineageTag: [dbo].[Date]
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e8c16b53-a8fb-420f-ad44-a5a2d993f3d8
+		sourceLineageTag: Date
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date-7db3ce18-9b4a-4429-ad02-6e3198931cbd = entity
+		mode: directLake
+		source
+			entityName: Date
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
+	annotation IsTableInBiModel = True
+

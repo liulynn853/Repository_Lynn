@@ -1,0 +1,97 @@
+table Orders
+	lineageTag: f2b2c209-cd8b-478f-86b6-6b01bc88c1d2
+	sourceLineageTag: [dbo].[Orders]
+
+	column 订单ID
+		dataType: string
+		sourceProviderType: varchar
+		lineageTag: bc3f0d19-7bc9-4777-85b8-4e5a51a49d0b
+		sourceLineageTag: 订单ID
+		summarizeBy: none
+		sourceColumn: 订单ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 订单日期
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: date
+		lineageTag: f628debe-37f7-45dd-b6c4-06724dbe2747
+		sourceLineageTag: 订单日期
+		summarizeBy: none
+		sourceColumn: 订单日期
+
+		annotation SummarizationSetBy = Automatic
+
+	column 发货日期
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: date
+		lineageTag: b0270234-4749-4245-9b5c-3179d7a97cad
+		sourceLineageTag: 发货日期
+		summarizeBy: none
+		sourceColumn: 发货日期
+
+		annotation SummarizationSetBy = Automatic
+
+	column 产品ID
+		dataType: string
+		sourceProviderType: varchar
+		lineageTag: 13b84e7c-8d87-4e0a-a43a-243ef2024ab7
+		sourceLineageTag: 产品ID
+		summarizeBy: none
+		sourceColumn: 产品ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 数量
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 27a96599-4c11-4b3b-a0ea-386016843cf3
+		sourceLineageTag: 数量
+		summarizeBy: sum
+		sourceColumn: 数量
+
+		annotation SummarizationSetBy = Automatic
+
+	column 折扣
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: e47f77bb-cf30-4de7-af43-054d722999d8
+		sourceLineageTag: 折扣
+		summarizeBy: sum
+		sourceColumn: 折扣
+
+		annotation SummarizationSetBy = Automatic
+
+	column 客户ID
+		dataType: string
+		sourceProviderType: varchar
+		lineageTag: a991f1bc-01d8-42f9-b501-ed80a5886d84
+		sourceLineageTag: 客户ID
+		summarizeBy: none
+		sourceColumn: 客户ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 城市
+		dataType: string
+		sourceProviderType: varchar
+		lineageTag: 610e5065-d4aa-4d38-8315-370697780d99
+		sourceLineageTag: 城市
+		summarizeBy: none
+		sourceColumn: 城市
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Orders-d355feef-2b33-4237-946b-08194d07e6b3 = entity
+		mode: directLake
+		source
+			entityName: Orders
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation IsTableInBiModel = True
+

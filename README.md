@@ -47,3 +47,7 @@ http://localhost:3000
 1. 推送到 GitHub 仓库。
 2. 在仓库 Settings -> Pages 中选择 `main` 分支和根目录。
 3. 等待 GitHub Pages 生成公开访问地址。
+
+## 仓库原始备注
+
+New_

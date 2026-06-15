@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Level C 配音闯关</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Level C Reading Voice</p>
+          <h1 id="page-title">Level C 配音闯关</h1>
+          <p class="hero-text">
+            英文课文、中文翻译、重点词汇、音标讲解和配音闯关。录完音后自动出星级结果。
+          </p>
+        </div>
+        <div class="mascot" aria-hidden="true">
+          <span class="mascot-face">:)</span>
+        </div>
+      </section>
+
+      <section class="story-picker" id="unitPicker" aria-label="选择单元">
+        <button class="story-tab is-active" type="button" data-story="0">Unit 1</button>
+        <button class="story-tab" type="button" data-story="1">Unit 2</button>
+        <button class="story-tab" type="button" data-story="2">Unit 3</button>
+      </section>
+
+      <section class="pay-card" aria-labelledby="pay-title">
+        <div>
+          <p class="eyebrow">30 RMB 体验</p>
+          <h2 id="pay-title">输入激活码，开启 Unit 1</h2>
+          <p>
+            新用户支付 30 元后可体验 Unit 1 的 8 个 Level。当前版本为静态 MVP，付款后由管理员发放激活码。
+          </p>
+          <p class="access-line">当前权限：<strong id="accessBadge">未激活预览</strong></p>
+        </div>
+        <div class="activation-box">
+          <label for="activationCode">激活码</label>
+          <input id="activationCode" type="text" inputmode="latin" placeholder="例如 RAZC-30-UNIT1" />
+          <button class="control-button primary" id="activateButton" type="button">激活</button>
+          <p class="activation-message" id="activationMessage">演示体验码：付款后由管理员发放。</p>
+        </div>
+      </section>
+
+      <section class="level-panel" aria-label="闯关进度">
+        <div>
+          <p class="eyebrow">当前关卡</p>
+          <h2 id="levelTitle">Unit 1 - Level 1</h2>
+        </div>
+        <div class="stars" id="bestStars" aria-label="本关最高星级">☆☆☆</div>
+      </section>
+
+      <section class="reader-card" aria-live="polite">
+        <div class="page-art" id="pageArt" aria-hidden="true"></div>
+        <div class="page-content">
+          <p class="page-count" id="pageCount">Page 1 / 8</p>
+          <h2 id="storyTitle">The Little Cat</h2>
+          <p class="sentence" id="sentenceOne">I see a little cat.</p>
+          <p class="sentence" id="sentenceTwo">The cat is on the mat.</p>
+          <div class="translation-card">
+            <p class="eyebrow">中文翻译</p>
+            <p id="translationText">我看见一只小猫。小猫在垫子上。</p>
+          </div>
+          <div class="focus-card">
+            <p class="eyebrow">重点词汇</p>
+            <p id="focusText">cat, mat, see</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="vocab-section" aria-labelledby="vocab-title">
+        <div>
+          <p class="eyebrow">Word Focus</p>
+          <h2 id="vocab-title">词汇、音标和重点</h2>
+        </div>
+        <div class="vocab-grid" id="vocabularyList"></div>
+      </section>
+
+      <section class="controls" aria-label="阅读控制">
+        <button class="control-button" id="prevPage" type="button">上一页</button>
+        <button class="control-button primary" id="speakPage" type="button">听一遍</button>
+        <button class="control-button" id="nextPage" type="button">下一页</button>
+      </section>
+
+      <section class="voice-panel" aria-labelledby="voice-title">
+        <div>
+          <p class="eyebrow">配音录制</p>
+          <h2 id="voice-title">录下你的声音</h2>
+          <p id="recordHint">点击“开始录音”，读出当前 Level。停止录音后会自动评分。</p>
+        </div>
+        <div class="record-actions">
+          <button class="record-button" id="recordButton" type="button">开始录音</button>
+          <button class="control-button" id="playRecording" type="button" disabled>播放录音</button>
+          <a class="download-link is-disabled" id="downloadRecording" href="#" download="level-c-voice.webm">下载录音</a>
+        </div>
+        <div class="score-card" id="scoreCard" hidden>
+          <p class="score-stars" id="scoreStars">☆☆☆</p>
+          <p id="scoreText">录音后自动评分。</p>
+          <small id="scoreDetails"></small>
+        </div>
+        <p class="paywall-notice" id="paywallNotice" hidden>输入激活码后可录音闯关。</p>
+        <audio id="audioPlayback" controls hidden></audio>
+      </section>
+
+      <section class="guide-card">
+        <h2>给家长的小提示</h2>
+        <ul>
+          <li>先点“听一遍”，让孩子熟悉节奏。</li>
+          <li>再让孩子跟读当前页，停止录音后系统自动评分。</li>
+          <li>3 星通过当前 Level，自动解锁下一 Level；30 元体验码开放 Unit 1。</li>
+          <li>评分只在本机浏览器完成，不上传孩子的录音。</li>
+        </ul>
+      </section>
+
+      <section class="guide-card">
+        <h2>内容与授权说明</h2>
+        <p id="sourceText">网页中的课文为原创 Level C 风格文本，可用于本项目商业 MVP。</p>
+        <p>
+          本项目不复制 RAZ 或其他受版权保护的原文。后续如接入授权课文，可直接替换课程数据。
+        </p>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

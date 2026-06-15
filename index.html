@@ -29,16 +29,16 @@
 
       <section class="pay-card" aria-labelledby="pay-title">
         <div>
-          <p class="eyebrow">30 RMB 体验</p>
-          <h2 id="pay-title">输入激活码，开启 Unit 1</h2>
+          <p class="eyebrow">30 RMB 解锁</p>
+          <h2 id="pay-title">Unit 1 免费，后续单元付费解锁</h2>
           <p>
-            新用户支付 30 元后可体验 Unit 1 的 8 个 Level。当前版本为静态 MVP，付款后由管理员发放激活码。
+            新用户默认可免费使用 Unit 1 的 8 个 Level。支付 30 元并输入激活码后，可解锁后续单元。
           </p>
-          <p class="access-line">当前权限：<strong id="accessBadge">未激活预览</strong></p>
+          <p class="access-line">当前权限：<strong id="accessBadge">免费版：Unit 1</strong></p>
         </div>
         <div class="activation-box">
           <label for="activationCode">激活码</label>
-          <input id="activationCode" type="text" inputmode="latin" placeholder="例如 RAZC-30-UNIT1" />
+          <input id="activationCode" type="text" inputmode="latin" placeholder="例如 RAZC-30-ALL" />
           <button class="control-button primary" id="activateButton" type="button">激活</button>
           <p class="activation-message" id="activationMessage">演示体验码：付款后由管理员发放。</p>
         </div>
@@ -100,7 +100,7 @@
           <p id="scoreText">录音后自动评分。</p>
           <small id="scoreDetails"></small>
         </div>
-        <p class="paywall-notice" id="paywallNotice" hidden>输入激活码后可录音闯关。</p>
+        <p class="paywall-notice" id="paywallNotice" hidden>Unit 1 免费开放，后续单元需输入激活码解锁。</p>
         <audio id="audioPlayback" controls hidden></audio>
       </section>
 
@@ -109,7 +109,7 @@
         <ul>
           <li>先点“听一遍”，让孩子熟悉节奏。</li>
           <li>再让孩子跟读当前页，停止录音后系统自动评分。</li>
-          <li>3 星通过当前 Level，自动解锁下一 Level；30 元体验码开放 Unit 1。</li>
+          <li>Unit 1 默认免费；后续 Unit 需要 30 元激活码解锁。</li>
           <li>评分只在本机浏览器完成，不上传孩子的录音。</li>
         </ul>
       </section>

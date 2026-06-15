@@ -1,13 +1,12 @@
 const accessPlans = {
-  preview: { label: "未激活预览", maxUnit: -1 },
-  trial: { label: "30 RMB Unit 1 体验", maxUnit: 0 },
-  full: { label: "教师全量预览", maxUnit: 2 }
+  free: { label: "免费版：Unit 1", maxUnit: 0 },
+  paid: { label: "付费版：全部单元", maxUnit: 2 }
 };
 
 const activationCodes = {
-  "RAZC-30-UNIT1": "trial",
-  "KIDS-VOICE-30": "trial",
-  "TEACHER-FULL-2026": "full"
+  "RAZC-30-ALL": "paid",
+  "KIDS-VOICE-30": "paid",
+  "TEACHER-FULL-2026": "paid"
 };
 
 const units = [
@@ -224,7 +223,11 @@ let progress = loadProgress();
 
 function loadAccessPlan() {
   const saved = localStorage.getItem(accessKey);
-  return accessPlans[saved] ? saved : "preview";
+  if (saved === "trial" || saved === "full") {
+    localStorage.setItem(accessKey, "paid");
+    return "paid";
+  }
+  return accessPlans[saved] ? saved : "free";
 }
 
 function loadProgress() {
@@ -266,10 +269,6 @@ function canUseUnit(index) {
   return index <= accessPlans[accessPlan].maxUnit;
 }
 
-function canPreviewCurrentLevel() {
-  return accessPlan === "preview" && activeStoryIndex === 0 && activePageIndex === 0;
-}
-
 function isCurrentLevelPlayable() {
   return canUseUnit(activeStoryIndex);
 }
@@ -280,7 +279,6 @@ function renderPage() {
   const unlockedLevel = progress.unlockedLevels[activeStoryIndex];
   const isLockedByLevel = activePageIndex > unlockedLevel;
   const isPlayable = isCurrentLevelPlayable() && !isLockedByLevel;
-  const isPreview = canPreviewCurrentLevel();
   const stars = progress.stars[activeStoryIndex][activePageIndex] || 0;
 
   levelTitle.textContent = `${unit.unit} - Level ${activePageIndex + 1}`;
@@ -302,12 +300,10 @@ function renderPage() {
 
   prevPage.disabled = activePageIndex === 0;
   nextPage.disabled = activePageIndex === unit.levels.length - 1 || activePageIndex + 1 > unlockedLevel;
-  speakPage.disabled = !(isPlayable || isPreview);
+  speakPage.disabled = !isPlayable;
   recordButton.disabled = !isPlayable;
   paywallNotice.hidden = isPlayable;
-  paywallNotice.textContent = isPreview
-    ? "当前是免费预览：可听读和学习词汇。支付 30 元并输入激活码后，可录音闯 Unit 1。"
-    : "该 Unit 尚未开放。30 元体验码当前开放 Unit 1；更多 Unit 可后续升级为正式版。";
+  paywallNotice.textContent = "Unit 1 默认免费开放。请输入 30 元付费激活码解锁后续单元。";
   resetScoreCard();
 }
 
@@ -331,7 +327,7 @@ function renderUnitTabs() {
     const index = Number(tab.dataset.story);
     const unlocked = canUseUnit(index);
     const completed = progress.stars[index]?.every((stars) => stars === 3);
-    tab.disabled = !unlocked && !(accessPlan === "preview" && index === 0);
+    tab.disabled = !unlocked;
     tab.classList.toggle("is-active", index === activeStoryIndex);
     tab.classList.toggle("is-locked", !unlocked);
     tab.textContent = `${units[index].unit}${completed ? " ✓" : ""}`;
@@ -343,12 +339,12 @@ function renderAccess() {
 }
 
 function setActiveStory(index) {
-  if (!canUseUnit(index) && !(accessPlan === "preview" && index === 0)) {
+  if (!canUseUnit(index)) {
     return;
   }
 
   activeStoryIndex = index;
-  activePageIndex = accessPlan === "preview" ? 0 : Math.min(progress.unlockedLevels[index], units[index].levels.length - 1);
+  activePageIndex = Math.min(progress.unlockedLevels[index], units[index].levels.length - 1);
   stopSpeech();
   clearRecording();
   renderPage();

@@ -556,6 +556,7 @@ function scoreCurrentRecording() {
       ? "太棒了，3 星通过！下一关已经解锁。"
       : "还差一点点。声音清楚、读完整，再录一次争取 3 星！";
   scoreDetails.textContent = buildScoreDetails(stars);
+  playResultSound(stars);
 }
 
 function scoreRecording() {
@@ -621,6 +622,43 @@ function buildScoreDetails(stars) {
 
   parts.push(stars === 3 ? "达到三星通关标准" : "建议再听一遍后重录");
   return parts.join(" · ");
+}
+
+function playResultSound(stars) {
+  const SoundAudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!SoundAudioContext) {
+    return;
+  }
+
+  const context = new SoundAudioContext();
+  const notes =
+    stars === 3
+      ? [
+          { frequency: 523.25, start: 0, duration: 0.12 },
+          { frequency: 659.25, start: 0.12, duration: 0.12 },
+          { frequency: 783.99, start: 0.24, duration: 0.22 }
+        ]
+      : [
+          { frequency: 392, start: 0, duration: 0.16 },
+          { frequency: 329.63, start: 0.16, duration: 0.18 },
+          { frequency: 261.63, start: 0.34, duration: 0.24 }
+        ];
+
+  notes.forEach((note) => {
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = stars === 3 ? "triangle" : "sine";
+    oscillator.frequency.setValueAtTime(note.frequency, context.currentTime + note.start);
+    gain.gain.setValueAtTime(0.0001, context.currentTime + note.start);
+    gain.gain.exponentialRampToValueAtTime(0.18, context.currentTime + note.start + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + note.start + note.duration);
+    oscillator.connect(gain).connect(context.destination);
+    oscillator.start(context.currentTime + note.start);
+    oscillator.stop(context.currentTime + note.start + note.duration);
+  });
+
+  const totalDuration = Math.max(...notes.map((note) => note.start + note.duration));
+  window.setTimeout(() => context.close(), (totalDuration + 0.1) * 1000);
 }
 
 function unlockNextLevel() {

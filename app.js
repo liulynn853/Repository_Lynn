@@ -167,14 +167,63 @@ function word(text, ipa, cn, note) {
   return { text, ipa, cn, note };
 }
 
+applyAdvancedPassages();
+
+function applyAdvancedPassages() {
+  const passageMap = {
+    "I Wake Up": ["I wake up early in the morning.", "The bright sun shines through my window.", "I stretch my arms and smile.", "I make my bed before breakfast.", "Today I want to learn something new.", "A good morning helps me feel ready."],
+    "My Red Cup": ["My red cup is on the wooden desk.", "I use it when I drink warm water.", "The cup is small, but it is useful.", "I keep it clean every day.", "When I finish drinking, I put it back.", "Taking care of small things is important."],
+    "I Like Milk": ["I like milk because it tastes fresh.", "I drink a glass after breakfast.", "Milk gives me energy for class.", "Sometimes I share milk with my sister.", "We say thank you to Mom.", "Healthy food helps us grow strong."],
+    "The Big Bus": ["A big yellow bus stops near my home.", "Many students get on the bus.", "The driver smiles and says hello.", "We sit down and talk quietly.", "The bus takes us to school safely.", "I like watching the streets go by."],
+    "At School": ["I go to school with my backpack.", "My friend Sam sits next to me.", "We read a story in English class.", "The teacher asks us to listen carefully.", "I raise my hand and answer a question.", "Learning with friends makes school fun."],
+    "We Can Run": ["We can run across the green field.", "The sun is warm on our faces.", "My friends cheer when I run fast.", "I slow down and take a deep breath.", "Running makes my heart beat quickly.", "Exercise helps our bodies stay healthy."],
+    "A Little Cat": ["A little cat sits on my lap.", "Its soft fur feels warm and smooth.", "The cat looks at me with bright eyes.", "I speak gently, so it feels safe.", "Soon it closes its eyes and rests.", "Being kind to animals is a good habit."],
+    "Good Night": ["At night, I put my book away.", "I brush my teeth and wash my face.", "Mom turns on a small yellow lamp.", "I say good night to my family.", "The moon shines outside my window.", "I sleep and dream about tomorrow."],
+    "Go to the Park": ["We go to the park after lunch.", "The path is clean and full of flowers.", "Children ride bikes near the trees.", "I hear birds singing in the sun.", "We walk slowly and enjoy the air.", "The park is a cheerful place to visit."],
+    "The Big Tree": ["A big tree stands in the park.", "Its leaves make a cool green roof.", "We sit under the tree and rest.", "I see ants moving on the ground.", "My friend draws the tree in her notebook.", "Nature gives us many things to notice."],
+    "A Little Bird": ["A little bird hops near the grass.", "It looks for food with quick eyes.", "We stand still and watch quietly.", "The bird opens its wings and flies.", "It lands on a branch above us.", "Small animals can make a day special."],
+    "The Red Kite": ["We see a red kite in the sky.", "The wind lifts it higher and higher.", "I hold the string with both hands.", "My brother runs and laughs behind me.", "The kite dances like a bright bird.", "It is exciting to play outside together."],
+    "Run and Run": ["We run on the grass after school.", "The field is wide and soft.", "I try to keep my steps steady.", "My friends run beside me and laugh.", "When we feel tired, we drink water.", "Playing outside makes us happy and strong."],
+    "Snack Time": ["It is snack time under the tree.", "We share crackers, fruit, and water.", "I choose an apple from my lunch box.", "My friend gives me a small cookie.", "We clean our hands before we eat.", "Sharing snacks makes our picnic friendly."],
+    "Dad Waves": ["Dad waves at us from the gate.", "He calls, \"Come here, it is time.\"", "We pick up our bags quickly.", "I tell Dad about the red kite.", "He listens carefully and smiles.", "Family time after play feels warm."],
+    "Go Home": ["We go home when the sky turns orange.", "The park becomes quiet behind us.", "I feel tired, but I am happy.", "Mom asks what I liked best.", "I say the kite was my favorite.", "A good day gives us sweet memories."],
+    "My Bag": ["I have a red school bag.", "It sits on my bed every morning.", "The bag has two strong straps.", "I check it before I leave home.", "A clean bag helps me find things.", "Being organized makes school easier."],
+    "A Little Book": ["I put a little book in my bag.", "The book has funny animal pictures.", "I read it when I finish my work.", "Sometimes I share it with a friend.", "Books can take us to new places.", "Reading a little every day is helpful."],
+    "A Blue Cup": ["I put a blue cup in my bag.", "The cup is light and easy to carry.", "I use it when I drink water.", "My teacher says water helps us think.", "I close the lid very tightly.", "Then my books stay dry and clean."],
+    "A Toy": ["I put a small toy in my bag.", "The toy can roll across the floor.", "I only play with it after class.", "My friend asks to try it too.", "We take turns and follow the rules.", "A good toy can teach us to share."],
+    "My Hat": ["I put my hat in my bag.", "The hat keeps the sun off my face.", "It is useful on hot days.", "I fold it carefully, so it fits.", "At the playground, I wear it again.", "Small habits help us take care of ourselves."],
+    "A Full Bag": ["My bag is full before school.", "It has a book, a cup, and a toy.", "It also has my hat inside.", "The bag feels heavy on my back.", "I take out things I do not need.", "A lighter bag is better for my body."],
+    "Mom Helps": ["Mom helps me zip the red bag.", "She checks that my homework is inside.", "I thank her before I leave.", "She reminds me to be kind at school.", "I wave and walk to the door.", "Her words help me start the day well."],
+    "Go to School": ["I take my red bag to school.", "The morning street is busy and bright.", "I walk carefully beside Mom.", "At the school gate, I see my friends.", "We say hello and go inside together.", "I am ready for a new school day."]
+  };
+
+  const translationMap = {
+    "I Wake Up": "我早上很早醒来。明亮的太阳照进窗户。我伸展手臂并微笑。我在早餐前整理床铺。今天我想学习新东西。美好的早晨让我准备好开始一天。",
+    "My Red Cup": "我的红杯子在木桌上。我喝温水时会用它。杯子很小，但很有用。我每天保持它干净。喝完以后，我把它放回去。照顾小物品很重要。",
+    "I Like Milk": "我喜欢牛奶，因为它味道新鲜。我早餐后喝一杯牛奶。牛奶给我上课的能量。有时我和妹妹分享牛奶。我们对妈妈说谢谢。健康的食物帮助我们强壮成长。",
+    "The Big Bus": "一辆黄色的大巴士停在我家附近。许多学生上了车。司机微笑着打招呼。我们坐下并轻声交谈。巴士安全地带我们去学校。我喜欢看街道从窗外经过。",
+    "At School": "我背着书包去学校。我的朋友 Sam 坐在我旁边。我们在英语课上读故事。老师让我们认真听。我举手回答问题。和朋友一起学习让学校生活很有趣。",
+    "We Can Run": "我们可以跑过绿色的操场。阳光温暖地照在脸上。我跑得快时朋友们为我加油。我慢下来并深呼吸。跑步让我的心跳加快。运动帮助我们的身体保持健康。",
+    "A Little Cat": "一只小猫坐在我的腿上。它柔软的毛温暖又顺滑。小猫用明亮的眼睛看着我。我轻轻说话，让它感到安全。不久它闭上眼睛休息。善待动物是好习惯。",
+    "Good Night": "晚上，我把书收好。我刷牙洗脸。妈妈打开一盏黄色小灯。我对家人说晚安。月亮在窗外发光。我睡着了，梦见明天。"
+  };
+
+  units.forEach((unit) => {
+    unit.levels.forEach((level) => {
+      level.lines = passageMap[level.title] || level.lines;
+      level.translation = translationMap[level.title] || `${level.translation} 这篇短文加入了更多细节，帮助孩子练习理解完整语境。`;
+      level.focus = `${level.focus} · reading, meaning, phonics`;
+    });
+  });
+}
+
 const storyTabs = document.querySelectorAll(".story-tab");
 const levelTitle = document.querySelector("#levelTitle");
 const bestStars = document.querySelector("#bestStars");
 const pageArt = document.querySelector("#pageArt");
 const pageCount = document.querySelector("#pageCount");
 const storyTitle = document.querySelector("#storyTitle");
-const sentenceOne = document.querySelector("#sentenceOne");
-const sentenceTwo = document.querySelector("#sentenceTwo");
+const sentenceList = document.querySelector("#sentenceList");
 const translationText = document.querySelector("#translationText");
 const focusText = document.querySelector("#focusText");
 const vocabularyList = document.querySelector("#vocabularyList");
@@ -360,8 +409,9 @@ function renderSentenceWords(lines) {
   let wordIndex = 0;
   let charOffset = 0;
 
-  [sentenceOne, sentenceTwo].forEach((element, lineIndex) => {
-    element.innerHTML = lines[lineIndex].replace(/[A-Za-z']+|[^A-Za-z']+/g, (part) => {
+  sentenceList.innerHTML = lines
+    .map((line, lineIndex) => {
+      const html = line.replace(/[A-Za-z']+|[^A-Za-z']+/g, (part) => {
       const start = charOffset;
       charOffset += part.length;
 
@@ -378,10 +428,13 @@ function renderSentenceWords(lines) {
       return `<span class="read-word" data-word-index="${wordIndex++}">${part}</span>`;
     });
 
-    if (lineIndex === 0) {
+      if (lineIndex < lines.length - 1) {
       charOffset += 1;
     }
-  });
+
+      return `<p class="sentence">${html}</p>`;
+    })
+    .join("");
 }
 
 function renderVocabulary(vocabulary) {
@@ -400,16 +453,54 @@ function renderVocabulary(vocabulary) {
 }
 
 function renderQuiz(level) {
-  const answer = level.vocabulary[0];
-  const options = buildQuizOptions(answer.text);
-  quizQuestion.textContent = `“${answer.cn}” 对应哪个英文单词？`;
+  const questions = buildQuizQuestions(level);
+  quizQuestion.textContent = "完成配音后，做 4 道小题检查理解、词汇和音标。";
   quizResult.textContent = "";
-  quizOptions.innerHTML = options
+  quizOptions.innerHTML = questions
     .map(
-      (option) =>
-        `<button class="quiz-option" type="button" data-answer="${option}" aria-label="选择 ${option}">${option}</button>`
+      (question, index) => `
+        <article class="quiz-card" data-question-index="${index}">
+          <h3>${index + 1}. ${question.prompt}</h3>
+          <div class="quiz-choice-row">
+            ${question.options
+              .map(
+                (option) =>
+                  `<button class="quiz-option" type="button" data-correct="${option === question.answer}" aria-label="选择 ${option}">${option}</button>`
+              )
+              .join("")}
+          </div>
+        </article>
+      `
     )
     .join("");
+}
+
+function buildQuizQuestions(level) {
+  const vocab = level.vocabulary;
+  const firstLine = level.lines[0];
+  const lastLine = level.lines[level.lines.length - 1];
+  return [
+    {
+      prompt: `“${vocab[0].cn}” 对应哪个英文单词？`,
+      answer: vocab[0].text,
+      options: buildQuizOptions(vocab[0].text)
+    },
+    {
+      prompt: `哪个音标属于 ${vocab[1].text}？`,
+      answer: vocab[1].ipa,
+      options: shuffleOptions([vocab[1].ipa, vocab[0].ipa, vocab[2].ipa])
+    },
+    {
+      prompt: "短文第一句说了什么？",
+      answer: firstLine,
+      options: shuffleOptions([firstLine, level.lines[1], lastLine])
+    },
+    {
+      prompt: "短文最后想表达什么？",
+      answer: lastLine,
+      options: shuffleOptions([lastLine, level.lines[2], level.lines[3]])
+    }
+  ];
 }
 
 function buildQuizOptions(answer) {
@@ -420,7 +511,11 @@ function buildQuizOptions(answer) {
     .filter((word) => word !== answer);
   const uniqueWords = [...new Set(words)];
   const options = [answer, ...uniqueWords.slice(activePageIndex, activePageIndex + 6).slice(0, 2)];
-  return options.sort(() => Math.random() - 0.5);
+  return shuffleOptions(options);
+}
+
+function shuffleOptions(options) {
+  return [...options].sort(() => Math.random() - 0.5);
 }
 
 function renderUnitTabs() {
@@ -833,18 +928,17 @@ function activateAccess() {
   renderPage();
 }
 
-function answerQuiz(selectedAnswer, button) {
+function answerQuiz(button) {
   unlockSound();
-  const level = units[activeStoryIndex].levels[activePageIndex];
-  const correctAnswer = level.vocabulary[0].text;
-  const isCorrect = selectedAnswer === correctAnswer;
+  const card = button.closest(".quiz-card");
+  const isCorrect = button.dataset.correct === "true";
 
-  quizOptions.querySelectorAll(".quiz-option").forEach((option) => {
+  card.querySelectorAll(".quiz-option").forEach((option) => {
     option.disabled = true;
-    option.classList.toggle("is-correct", option.dataset.answer === correctAnswer);
+    option.classList.toggle("is-correct", option.dataset.correct === "true");
   });
   button.classList.toggle("is-wrong", !isCorrect);
-  quizResult.textContent = isCorrect ? "答对啦！你学会这个重点词了。" : `再想一想，正确答案是 ${correctAnswer}。`;
+  quizResult.textContent = isCorrect ? "答对啦！继续完成下一题。" : "再想一想，绿色选项是正确答案。";
   playFeedbackSound(isCorrect ? "success" : "sad");
 }
 
@@ -897,7 +991,7 @@ quizOptions.addEventListener("click", (event) => {
     return;
   }
 
-  answerQuiz(button.dataset.answer, button);
+  answerQuiz(button);
 });
 
 window.addEventListener("beforeunload", () => {

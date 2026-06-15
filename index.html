@@ -68,6 +68,25 @@
             <p class="sentence">I get ready for school.</p>
             <p class="sentence">It is a happy morning.</p>
           </div>
+          <div class="inline-record-panel" aria-labelledby="voice-title">
+            <div>
+              <p class="eyebrow">配音录制</p>
+              <h2 id="voice-title">读完句子，马上录音</h2>
+              <p id="recordHint">点击“开始录音”，读出当前 Level。停止录音后会自动评分。</p>
+            </div>
+            <div class="record-actions">
+              <button class="record-button" id="recordButton" type="button">开始录音</button>
+              <button class="control-button" id="playRecording" type="button" disabled>播放录音</button>
+              <a class="download-link is-disabled" id="downloadRecording" href="#" download="level-c-voice.webm">下载录音</a>
+            </div>
+            <div class="score-card" id="scoreCard" hidden>
+              <p class="score-stars" id="scoreStars">☆☆☆</p>
+              <p id="scoreText">录音后自动评分。</p>
+              <small id="scoreDetails"></small>
+            </div>
+            <p class="paywall-notice" id="paywallNotice" hidden>Unit 1 免费开放，后续单元需输入激活码解锁。</p>
+            <audio id="audioPlayback" controls hidden></audio>
+          </div>
           <div class="translation-card">
             <p class="eyebrow">中文翻译</p>
             <p id="translationText">
@@ -92,26 +111,6 @@
       <section class="controls" aria-label="阅读控制">
         <button class="control-button" id="prevPage" type="button">上一页</button>
         <button class="control-button" id="nextPage" type="button">下一页</button>
-      </section>
-
-      <section class="voice-panel" aria-labelledby="voice-title">
-        <div>
-          <p class="eyebrow">配音录制</p>
-          <h2 id="voice-title">录下你的声音</h2>
-          <p id="recordHint">点击“开始录音”，读出当前 Level。停止录音后会自动评分。</p>
-        </div>
-        <div class="record-actions">
-          <button class="record-button" id="recordButton" type="button">开始录音</button>
-          <button class="control-button" id="playRecording" type="button" disabled>播放录音</button>
-          <a class="download-link is-disabled" id="downloadRecording" href="#" download="level-c-voice.webm">下载录音</a>
-        </div>
-        <div class="score-card" id="scoreCard" hidden>
-          <p class="score-stars" id="scoreStars">☆☆☆</p>
-          <p id="scoreText">录音后自动评分。</p>
-          <small id="scoreDetails"></small>
-        </div>
-        <p class="paywall-notice" id="paywallNotice" hidden>Unit 1 免费开放，后续单元需输入激活码解锁。</p>
-        <audio id="audioPlayback" controls hidden></audio>
       </section>
 
       <section class="quiz-section" aria-labelledby="quiz-title">

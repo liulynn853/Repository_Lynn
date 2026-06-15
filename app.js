@@ -178,6 +178,9 @@ const sentenceTwo = document.querySelector("#sentenceTwo");
 const translationText = document.querySelector("#translationText");
 const focusText = document.querySelector("#focusText");
 const vocabularyList = document.querySelector("#vocabularyList");
+const quizQuestion = document.querySelector("#quizQuestion");
+const quizOptions = document.querySelector("#quizOptions");
+const quizResult = document.querySelector("#quizResult");
 const sourceText = document.querySelector("#sourceText");
 const accessBadge = document.querySelector("#accessBadge");
 const activationCode = document.querySelector("#activationCode");
@@ -210,6 +213,8 @@ let volumeFrame = 0;
 let volumeSamples = [];
 let recognition = null;
 let transcript = "";
+let soundContext = null;
+let currentWordRanges = [];
 
 const storageKey = "level-c-voice-progress-v2";
 const accessKey = "level-c-voice-access-v1";
@@ -284,8 +289,7 @@ function renderPage() {
   levelTitle.textContent = `${unit.unit} - Level ${activePageIndex + 1}`;
   bestStars.textContent = makeStars(stars);
   storyTitle.textContent = level.title;
-  sentenceOne.textContent = level.lines[0];
-  sentenceTwo.textContent = level.lines[1];
+  renderSentenceWords(level.lines);
   translationText.textContent = level.translation;
   focusText.textContent = level.focus;
   sourceText.textContent = unit.source;
@@ -295,6 +299,7 @@ function renderPage() {
   pageArt.style.setProperty("--art-main", unit.art);
 
   renderVocabulary(level.vocabulary);
+  renderQuiz(level);
   renderUnitTabs();
   renderAccess();
 
@@ -305,6 +310,36 @@ function renderPage() {
   paywallNotice.hidden = isPlayable;
   paywallNotice.textContent = "Unit 1 默认免费开放。请输入 30 元付费激活码解锁后续单元。";
   resetScoreCard();
+  clearReadingHighlight();
+}
+
+function renderSentenceWords(lines) {
+  currentWordRanges = [];
+  let wordIndex = 0;
+  let charOffset = 0;
+
+  [sentenceOne, sentenceTwo].forEach((element, lineIndex) => {
+    element.innerHTML = lines[lineIndex].replace(/[A-Za-z']+|[^A-Za-z']+/g, (part) => {
+      const start = charOffset;
+      charOffset += part.length;
+
+      if (!/[A-Za-z']+/.test(part)) {
+        return part;
+      }
+
+      currentWordRanges.push({
+        start,
+        end: charOffset,
+        index: wordIndex
+      });
+
+      return `<span class="read-word" data-word-index="${wordIndex++}">${part}</span>`;
+    });
+
+    if (lineIndex === 0) {
+      charOffset += 1;
+    }
+  });
 }
 
 function renderVocabulary(vocabulary) {
@@ -320,6 +355,30 @@ function renderVocabulary(vocabulary) {
       `
     )
     .join("");
+}
+
+function renderQuiz(level) {
+  const answer = level.vocabulary[0];
+  const options = buildQuizOptions(answer.text);
+  quizQuestion.textContent = `“${answer.cn}” 对应哪个英文单词？`;
+  quizResult.textContent = "";
+  quizOptions.innerHTML = options
+    .map(
+      (option) =>
+        `<button class="quiz-option" type="button" data-answer="${option}" aria-label="选择 ${option}">${option}</button>`
+    )
+    .join("");
+}
+
+function buildQuizOptions(answer) {
+  const words = units
+    .flatMap((unit) => unit.levels)
+    .flatMap((level) => level.vocabulary)
+    .map((item) => item.text)
+    .filter((word) => word !== answer);
+  const uniqueWords = [...new Set(words)];
+  const options = [answer, ...uniqueWords.slice(activePageIndex, activePageIndex + 6).slice(0, 2)];
+  return options.sort(() => Math.random() - 0.5);
 }
 
 function renderUnitTabs() {
@@ -362,9 +421,11 @@ function stopSpeech() {
   if ("speechSynthesis" in window) {
     window.speechSynthesis.cancel();
   }
+  clearReadingHighlight();
 }
 
 function speakCurrentPage() {
+  unlockSound();
   if (!("speechSynthesis" in window)) {
     recordHint.textContent = "这个浏览器暂不支持朗读功能，可以直接录音跟读。";
     return;
@@ -375,10 +436,35 @@ function speakCurrentPage() {
   utterance.lang = "en-US";
   utterance.rate = 0.72;
   utterance.pitch = 1.08;
+  utterance.addEventListener("boundary", (event) => {
+    if (event.name === "word" || typeof event.charIndex === "number") {
+      highlightWordAt(event.charIndex);
+    }
+  });
+  utterance.addEventListener("end", clearReadingHighlight);
+  utterance.addEventListener("error", clearReadingHighlight);
   window.speechSynthesis.speak(utterance);
 }
 
+function highlightWordAt(charIndex) {
+  const range = currentWordRanges.find((item) => charIndex >= item.start && charIndex < item.end);
+  if (!range) {
+    return;
+  }
+
+  document.querySelectorAll(".read-word").forEach((word) => {
+    word.classList.toggle("is-speaking", Number(word.dataset.wordIndex) === range.index);
+  });
+}
+
+function clearReadingHighlight() {
+  document.querySelectorAll(".read-word.is-speaking").forEach((word) => {
+    word.classList.remove("is-speaking");
+  });
+}
+
 async function startRecording() {
+  unlockSound();
   if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
     recordHint.textContent = "这个浏览器不支持录音，请换用新版 Chrome 或 Edge。";
     return;
@@ -625,40 +711,58 @@ function buildScoreDetails(stars) {
 }
 
 function playResultSound(stars) {
+  playFeedbackSound(stars === 3 ? "success" : "sad");
+}
+
+function unlockSound() {
   const SoundAudioContext = window.AudioContext || window.webkitAudioContext;
   if (!SoundAudioContext) {
+    return null;
+  }
+
+  if (!soundContext) {
+    soundContext = new SoundAudioContext();
+  }
+
+  if (soundContext.state === "suspended") {
+    soundContext.resume();
+  }
+
+  return soundContext;
+}
+
+function playFeedbackSound(type) {
+  const context = unlockSound();
+  if (!context) {
     return;
   }
 
-  const context = new SoundAudioContext();
   const notes =
-    stars === 3
+    type === "success"
       ? [
-          { frequency: 523.25, start: 0, duration: 0.12 },
-          { frequency: 659.25, start: 0.12, duration: 0.12 },
-          { frequency: 783.99, start: 0.24, duration: 0.22 }
+          { frequency: 523.25, start: 0, duration: 0.14 },
+          { frequency: 659.25, start: 0.14, duration: 0.14 },
+          { frequency: 783.99, start: 0.28, duration: 0.18 },
+          { frequency: 1046.5, start: 0.46, duration: 0.26 }
         ]
       : [
-          { frequency: 392, start: 0, duration: 0.16 },
-          { frequency: 329.63, start: 0.16, duration: 0.18 },
-          { frequency: 261.63, start: 0.34, duration: 0.24 }
+          { frequency: 440, start: 0, duration: 0.2 },
+          { frequency: 349.23, start: 0.2, duration: 0.24 },
+          { frequency: 261.63, start: 0.44, duration: 0.34 }
         ];
 
   notes.forEach((note) => {
     const oscillator = context.createOscillator();
     const gain = context.createGain();
-    oscillator.type = stars === 3 ? "triangle" : "sine";
+    oscillator.type = type === "success" ? "triangle" : "sawtooth";
     oscillator.frequency.setValueAtTime(note.frequency, context.currentTime + note.start);
     gain.gain.setValueAtTime(0.0001, context.currentTime + note.start);
-    gain.gain.exponentialRampToValueAtTime(0.18, context.currentTime + note.start + 0.02);
+    gain.gain.exponentialRampToValueAtTime(type === "success" ? 0.28 : 0.16, context.currentTime + note.start + 0.02);
     gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + note.start + note.duration);
     oscillator.connect(gain).connect(context.destination);
     oscillator.start(context.currentTime + note.start);
     oscillator.stop(context.currentTime + note.start + note.duration);
   });
-
-  const totalDuration = Math.max(...notes.map((note) => note.start + note.duration));
-  window.setTimeout(() => context.close(), (totalDuration + 0.1) * 1000);
 }
 
 function unlockNextLevel() {
@@ -687,9 +791,26 @@ function activateAccess() {
   renderPage();
 }
 
+function answerQuiz(selectedAnswer, button) {
+  unlockSound();
+  const level = units[activeStoryIndex].levels[activePageIndex];
+  const correctAnswer = level.vocabulary[0].text;
+  const isCorrect = selectedAnswer === correctAnswer;
+
+  quizOptions.querySelectorAll(".quiz-option").forEach((option) => {
+    option.disabled = true;
+    option.classList.toggle("is-correct", option.dataset.answer === correctAnswer);
+  });
+  button.classList.toggle("is-wrong", !isCorrect);
+  quizResult.textContent = isCorrect ? "答对啦！你学会这个重点词了。" : `再想一想，正确答案是 ${correctAnswer}。`;
+  playFeedbackSound(isCorrect ? "success" : "sad");
+}
+
 storyTabs.forEach((tab) => {
   tab.addEventListener("click", () => setActiveStory(Number(tab.dataset.story)));
 });
+
+document.addEventListener("pointerdown", unlockSound, { once: true });
 
 prevPage.addEventListener("click", () => {
   activePageIndex = Math.max(0, activePageIndex - 1);
@@ -723,8 +844,18 @@ recordButton.addEventListener("click", () => {
 });
 
 playRecording.addEventListener("click", () => {
+  unlockSound();
   audioPlayback.hidden = false;
   audioPlayback.play();
+});
+
+quizOptions.addEventListener("click", (event) => {
+  const button = event.target.closest(".quiz-option");
+  if (!button) {
+    return;
+  }
+
+  answerQuiz(button.dataset.answer, button);
 });
 
 window.addEventListener("beforeunload", () => {

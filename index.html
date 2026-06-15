@@ -56,7 +56,10 @@
         <div class="page-art" id="pageArt" aria-hidden="true"></div>
         <div class="page-content">
           <p class="page-count" id="pageCount">Page 1 / 8</p>
-          <h2 id="storyTitle">The Little Cat</h2>
+          <div class="reader-title-row">
+            <h2 id="storyTitle">The Little Cat</h2>
+            <button class="control-button primary listen-button" id="speakPage" type="button">听一遍</button>
+          </div>
           <p class="sentence" id="sentenceOne">I see a little cat.</p>
           <p class="sentence" id="sentenceTwo">The cat is on the mat.</p>
           <div class="translation-card">
@@ -80,8 +83,17 @@
 
       <section class="controls" aria-label="阅读控制">
         <button class="control-button" id="prevPage" type="button">上一页</button>
-        <button class="control-button primary" id="speakPage" type="button">听一遍</button>
         <button class="control-button" id="nextPage" type="button">下一页</button>
+      </section>
+
+      <section class="quiz-section" aria-labelledby="quiz-title">
+        <div>
+          <p class="eyebrow">小测试</p>
+          <h2 id="quiz-title">测一测学会了吗？</h2>
+          <p id="quizQuestion">请选择正确答案。</p>
+        </div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <p class="quiz-result" id="quizResult" aria-live="polite"></p>
       </section>
 
       <section class="voice-panel" aria-labelledby="voice-title">

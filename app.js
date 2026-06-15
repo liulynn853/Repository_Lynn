@@ -296,7 +296,7 @@ function renderPage() {
   pageCount.textContent = `${unit.title} · ${activePageIndex + 1} / ${unit.levels.length}`;
   pageArt.style.setProperty("--art-a", unit.theme[0]);
   pageArt.style.setProperty("--art-b", unit.theme[1]);
-  pageArt.style.setProperty("--art-main", unit.art);
+  renderLessonArt(level);
 
   renderVocabulary(level.vocabulary);
   renderQuiz(level);
@@ -311,6 +311,48 @@ function renderPage() {
   paywallNotice.textContent = "Unit 1 默认免费开放。请输入 30 元付费激活码解锁后续单元。";
   resetScoreCard();
   clearReadingHighlight();
+}
+
+function renderLessonArt(level) {
+  const scene = getLessonScene(level.title);
+  pageArt.setAttribute("aria-label", scene.label);
+  pageArt.innerHTML = `
+    <div class="scene-sky">${scene.sky}</div>
+    <div class="scene-main">${scene.main}</div>
+    <div class="scene-props">${scene.props}</div>
+    <p class="scene-caption">${scene.label}</p>
+  `;
+}
+
+function getLessonScene(title) {
+  const scenes = {
+    "I Wake Up": { sky: "☀️", main: "🛏️", props: "👧", label: "孩子醒来，看见太阳" },
+    "My Red Cup": { sky: "✨", main: "🔴☕", props: "🪵", label: "红杯子放在桌子上" },
+    "I Like Milk": { sky: "🥛", main: "😊", props: "💧", label: "孩子喜欢喝牛奶" },
+    "The Big Bus": { sky: "☀️", main: "🚌", props: "💨", label: "一辆大巴士开走了" },
+    "At School": { sky: "🏫", main: "👧👦", props: "🪑", label: "孩子们在学校坐在一起" },
+    "We Can Run": { sky: "☀️", main: "🏃‍♀️🏃", props: "🌿", label: "孩子们在阳光下跑步" },
+    "A Little Cat": { sky: "💛", main: "🐱", props: "🧒", label: "小猫坐在孩子腿上" },
+    "Good Night": { sky: "🌙", main: "🛏️", props: "⭐", label: "孩子在床上说晚安" },
+    "Go to the Park": { sky: "☀️", main: "🌳", props: "👧👦", label: "孩子们去阳光下的公园" },
+    "The Big Tree": { sky: "🌤️", main: "🌳", props: "🧒🪑", label: "孩子坐在大树旁" },
+    "A Little Bird": { sky: "☁️", main: "🐦", props: "🌿", label: "小鸟在草地上跳" },
+    "The Red Kite": { sky: "🪁", main: "🔴", props: "⬆️", label: "红风筝飞上天空" },
+    "Run and Run": { sky: "☀️", main: "🏃🏃‍♀️", props: "🌱🌱", label: "孩子们在草地上跑啊跑" },
+    "Snack Time": { sky: "✨", main: "🍪", props: "😊😊", label: "孩子们开心吃点心" },
+    "Dad Waves": { sky: "👋", main: "👨", props: "👧👦", label: "爸爸挥手叫孩子过来" },
+    "Go Home": { sky: "🏠", main: "😊😊", props: "🌳", label: "孩子们开心回家" },
+    "My Bag": { sky: "✨", main: "🎒", props: "🛏️", label: "红书包放在床上" },
+    "A Little Book": { sky: "📖", main: "🎒", props: "✋", label: "把一本小书放进书包" },
+    "A Blue Cup": { sky: "🔵", main: "🥤", props: "🎒", label: "把蓝杯子放进书包" },
+    "A Toy": { sky: "🧸", main: "🎒", props: "🛞", label: "把会滚的玩具放进书包" },
+    "My Hat": { sky: "🧢", main: "🎒", props: "😊", label: "把帽子放进书包" },
+    "A Full Bag": { sky: "💪", main: "🎒", props: "📚🥤🧸", label: "书包装满了，不轻了" },
+    "Mom Helps": { sky: "💗", main: "👩‍👧", props: "🎒", label: "妈妈帮孩子拉上书包" },
+    "Go to School": { sky: "🏫", main: "🎒", props: "🚶‍♀️", label: "孩子背着红书包去学校" }
+  };
+
+  return scenes[title] || { sky: "✨", main: "📘", props: "😊", label: "当前课文场景" };
 }
 
 function renderSentenceWords(lines) {

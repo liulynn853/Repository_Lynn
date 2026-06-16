@@ -116,6 +116,7 @@ h2 {
   gap: 12px;
   margin: 22px 0;
   overflow-x: auto;
+  scroll-padding: 16px;
   padding-bottom: 4px;
 }
 
@@ -357,6 +358,11 @@ h2 {
   margin-top: 12px;
 }
 
+.sentence-pair {
+  display: grid;
+  gap: 4px;
+}
+
 .sentence {
   margin: 0;
   padding: 12px 16px;
@@ -365,6 +371,25 @@ h2 {
   font-size: clamp(1.2rem, 3.2vw, 1.75rem);
   font-weight: 900;
   line-height: 1.38;
+}
+
+.sentence-translation {
+  margin: 0;
+  padding: 8px 16px;
+  border-radius: 16px;
+  background: #fff8df;
+  color: #6b5a2b;
+  font-size: clamp(1rem, 2.6vw, 1.25rem);
+  font-weight: 800;
+  line-height: 1.45;
+  transition: background 0.12s ease, color 0.12s ease, transform 0.12s ease;
+}
+
+.sentence-translation.is-speaking {
+  background: #ffe066;
+  color: #1f2937;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(255, 176, 0, 0.2);
 }
 
 .read-word {

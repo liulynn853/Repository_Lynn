@@ -30,11 +30,11 @@
       <section class="pay-card" aria-labelledby="pay-title">
         <div>
           <p class="eyebrow">30 RMB 解锁</p>
-          <h2 id="pay-title">Unit 1 免费，后续单元付费解锁</h2>
+          <h2 id="pay-title">前 20 个单元免费，后 10 个单元付费解锁</h2>
           <p>
-            新用户默认可免费使用 Unit 1 的 8 个 Level。支付 30 元并输入激活码后，可解锁后续单元。
+            新用户默认可免费使用 Unit 1-20。支付 30 元并输入激活码后，可解锁 Unit 21-30。
           </p>
-          <p class="access-line">当前权限：<strong id="accessBadge">免费版：Unit 1</strong></p>
+          <p class="access-line">当前权限：<strong id="accessBadge">免费版：Unit 1-20</strong></p>
         </div>
         <div class="activation-box">
           <label for="activationCode">激活码</label>
@@ -61,12 +61,30 @@
             <button class="control-button primary listen-button" id="speakPage" type="button">听一遍</button>
           </div>
           <div class="sentence-list" id="sentenceList">
-            <p class="sentence">I wake up early.</p>
-            <p class="sentence">I see the bright sun.</p>
-            <p class="sentence">I open my window.</p>
-            <p class="sentence">The air feels fresh.</p>
-            <p class="sentence">I get ready for school.</p>
-            <p class="sentence">It is a happy morning.</p>
+            <div class="sentence-pair">
+              <p class="sentence">I wake up early.</p>
+              <p class="sentence-translation">我早上很早醒来。</p>
+            </div>
+            <div class="sentence-pair">
+              <p class="sentence">I see the bright sun.</p>
+              <p class="sentence-translation">我看见明亮的太阳。</p>
+            </div>
+            <div class="sentence-pair">
+              <p class="sentence">I open my window.</p>
+              <p class="sentence-translation">我打开窗户。</p>
+            </div>
+            <div class="sentence-pair">
+              <p class="sentence">The air feels fresh.</p>
+              <p class="sentence-translation">空气感觉很清新。</p>
+            </div>
+            <div class="sentence-pair">
+              <p class="sentence">I get ready for school.</p>
+              <p class="sentence-translation">我准备去上学。</p>
+            </div>
+            <div class="sentence-pair">
+              <p class="sentence">It is a happy morning.</p>
+              <p class="sentence-translation">这是一个快乐的早晨。</p>
+            </div>
           </div>
           <div class="inline-record-panel" aria-labelledby="voice-title">
             <div>
@@ -84,14 +102,8 @@
               <p id="scoreText">录音后自动评分。</p>
               <small id="scoreDetails"></small>
             </div>
-            <p class="paywall-notice" id="paywallNotice" hidden>Unit 1 免费开放，后续单元需输入激活码解锁。</p>
+            <p class="paywall-notice" id="paywallNotice" hidden>Unit 1-20 免费开放，Unit 21-30 需输入激活码解锁。</p>
             <audio id="audioPlayback" controls hidden></audio>
-          </div>
-          <div class="translation-card">
-            <p class="eyebrow">中文翻译</p>
-            <p id="translationText">
-              我早上很早醒来。明亮的太阳照进窗户。我伸展手臂并微笑。我在早餐前整理床铺。今天我想学习新东西。美好的早晨让我准备好开始一天。
-            </p>
           </div>
           <div class="focus-card">
             <p class="eyebrow">重点词汇</p>
@@ -128,7 +140,7 @@
         <ul>
           <li>先点“听一遍”，让孩子熟悉节奏。</li>
           <li>再让孩子跟读当前页，停止录音后系统自动评分。</li>
-          <li>Unit 1 默认免费；后续 Unit 需要 30 元激活码解锁。</li>
+          <li>Unit 1-20 默认免费；Unit 21-30 需要 30 元激活码解锁。</li>
           <li>评分只在本机浏览器完成，不上传孩子的录音。</li>
         </ul>
       </section>

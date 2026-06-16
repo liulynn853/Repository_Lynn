@@ -1,6 +1,6 @@
 const accessPlans = {
-  free: { label: "免费版：Unit 1", maxUnit: 0 },
-  paid: { label: "付费版：全部单元", maxUnit: 2 }
+  free: { label: "免费版：Unit 1-20", maxUnit: 19 },
+  paid: { label: "付费版：Unit 1-30", maxUnit: 29 }
 };
 
 const activationCodes = {
@@ -168,6 +168,7 @@ function word(text, ipa, cn, note) {
 }
 
 applyAdvancedPassages();
+expandToThirtyUnits();
 
 function applyAdvancedPassages() {
   const passageMap = {
@@ -212,12 +213,187 @@ function applyAdvancedPassages() {
     unit.levels.forEach((level) => {
       level.lines = passageMap[level.title] || level.lines;
       level.translation = translationMap[level.title] || `${level.translation} 这篇短文加入了更多细节，帮助孩子练习理解完整语境。`;
+      level.translationLines = splitTranslation(level.translation, level.lines.length);
       level.focus = `${level.focus} · reading, meaning, phonics`;
     });
   });
 }
 
-const storyTabs = document.querySelectorAll(".story-tab");
+function expandToThirtyUnits() {
+  const topics = [
+    ["Family Weekend", "family", "weekend", "plan", "家庭周末"],
+    ["My Clean Room", "room", "clean", "shelf", "整理房间"],
+    ["A Rainy Day", "rain", "umbrella", "street", "雨天出行"],
+    ["The Class Garden", "garden", "plant", "water", "班级花园"],
+    ["Library Time", "library", "borrow", "quiet", "图书馆时间"],
+    ["A School Show", "show", "stage", "practice", "学校表演"],
+    ["The Little Robot", "robot", "button", "move", "小机器人"],
+    ["Market Morning", "market", "fruit", "choose", "早市购物"],
+    ["A Trip to the Zoo", "zoo", "animal", "guide", "动物园之旅"],
+    ["Helping Grandpa", "grandpa", "garden", "carry", "帮助爷爷"],
+    ["My New Neighbor", "neighbor", "welcome", "share", "新邻居"],
+    ["The Lost Pencil", "pencil", "lost", "find", "丢失的铅笔"],
+    ["A Bike Ride", "bike", "helmet", "safe", "骑车出行"],
+    ["Cooking with Mom", "cook", "mix", "smell", "和妈妈做饭"],
+    ["The Science Corner", "science", "magnet", "test", "科学角"],
+    ["A Kind Team", "team", "kind", "help", "友善团队"],
+    ["Music Class", "music", "rhythm", "song", "音乐课"],
+    ["Sports Day", "race", "finish", "cheer", "运动会"],
+    ["The Blue Planet", "planet", "ocean", "protect", "蓝色星球"],
+    ["A Letter to Amy", "letter", "write", "answer", "给 Amy 的信"],
+    ["The Snowy Hill", "snow", "hill", "slide", "雪山小坡"],
+    ["A Clever Dog", "dog", "clever", "follow", "聪明的小狗"],
+    ["Museum Visit", "museum", "history", "ticket", "参观博物馆"],
+    ["The Busy Airport", "airport", "ticket", "plane", "忙碌机场"],
+    ["A Camping Night", "camp", "tent", "fire", "露营夜晚"],
+    ["City Helpers", "city", "helper", "safe", "城市帮手"],
+    ["My Future Dream", "dream", "future", "goal", "未来梦想"]
+  ];
+
+  topics.forEach((topic, index) => {
+    units.push(createGeneratedUnit(index + 4, topic));
+  });
+}
+
+function createGeneratedUnit(number, [title, wordOne, wordTwo, wordThree, chineseTopic]) {
+  const themePairs = [
+    ["#ffd166", "#fff1bf"],
+    ["#8bdc9a", "#dff8ce"],
+    ["#95c8ff", "#e8f3ff"],
+    ["#ff9ab7", "#ffe3ee"]
+  ];
+  const theme = themePairs[number % themePairs.length];
+  const levelTitles = ["A New Start", "Look Around", "Work Together", "A Small Problem", "Smart Ideas", "Kind Choices", "Tell the Story", "A Happy Ending"];
+
+  return {
+    unit: `Unit ${number}`,
+    title,
+    source: "原创小学英语三四年级风格文本，可用于本项目商业 MVP。",
+    theme,
+    levels: levelTitles.map((levelTitle, levelIndex) => {
+      const lines = buildGeneratedLines(title, wordOne, wordTwo, wordThree, levelIndex);
+      return lesson(`${title}: ${levelTitle}`, lines, buildGeneratedTranslation(chineseTopic, levelIndex), `${wordOne}, ${wordTwo}, ${wordThree} · reading, meaning, phonics`, [
+        word(wordOne, "/ˈwɝːd/", topicWordCn(wordOne), "主题词"),
+        word(wordTwo, "/ˈtɑːpɪk/", topicWordCn(wordTwo), "阅读关键词"),
+        word(wordThree, "/ˈæktɪv/", topicWordCn(wordThree), "动作或品质词")
+      ]);
+    })
+  };
+}
+
+function buildGeneratedLines(title, wordOne, wordTwo, wordThree, levelIndex) {
+  const dayParts = ["morning", "class", "break time", "afternoon", "Friday", "weekend", "holiday", "evening"];
+  return [
+    `In ${title}, we learn about ${wordOne}.`,
+    `The ${wordTwo} is important in this story.`,
+    `I look carefully and try to understand more.`,
+    `My friend and I ${wordThree} in a helpful way.`,
+    `We talk about the problem during ${dayParts[levelIndex]}.`,
+    `At the end, I can tell the story clearly.`
+  ];
+}
+
+function buildGeneratedTranslation(chineseTopic, levelIndex) {
+  const timeWords = ["早晨", "课堂上", "课间", "下午", "星期五", "周末", "假期", "晚上"];
+  return `在“${chineseTopic}”这个主题中，我们学习一个重要内容。故事里的关键词很有用。我认真观察，并努力理解更多。我和朋友用有帮助的方式一起行动。我们在${timeWords[levelIndex]}讨论这个问题。最后，我可以清楚地讲出这个故事。`;
+}
+
+function topicWordCn(wordText) {
+  const dictionary = {
+    family: "家庭",
+    weekend: "周末",
+    plan: "计划",
+    room: "房间",
+    clean: "清洁",
+    shelf: "架子",
+    rain: "雨",
+    umbrella: "雨伞",
+    street: "街道",
+    garden: "花园",
+    plant: "植物",
+    water: "水",
+    library: "图书馆",
+    borrow: "借",
+    quiet: "安静的",
+    show: "表演",
+    stage: "舞台",
+    practice: "练习",
+    robot: "机器人",
+    button: "按钮",
+    move: "移动",
+    market: "市场",
+    fruit: "水果",
+    choose: "选择",
+    zoo: "动物园",
+    animal: "动物",
+    guide: "向导",
+    grandpa: "爷爷",
+    carry: "搬",
+    neighbor: "邻居",
+    welcome: "欢迎",
+    share: "分享",
+    pencil: "铅笔",
+    lost: "丢失的",
+    find: "找到",
+    bike: "自行车",
+    helmet: "头盔",
+    safe: "安全的",
+    cook: "烹饪",
+    mix: "混合",
+    smell: "气味",
+    science: "科学",
+    magnet: "磁铁",
+    test: "测试",
+    team: "团队",
+    kind: "友善的",
+    help: "帮助",
+    music: "音乐",
+    rhythm: "节奏",
+    song: "歌曲",
+    race: "比赛",
+    finish: "完成",
+    cheer: "欢呼",
+    planet: "星球",
+    ocean: "海洋",
+    protect: "保护",
+    letter: "信",
+    write: "写",
+    answer: "回答",
+    snow: "雪",
+    hill: "小山",
+    slide: "滑行",
+    dog: "狗",
+    clever: "聪明的",
+    follow: "跟随",
+    museum: "博物馆",
+    history: "历史",
+    ticket: "票",
+    airport: "机场",
+    plane: "飞机",
+    camp: "露营",
+    tent: "帐篷",
+    fire: "火",
+    city: "城市",
+    helper: "帮手",
+    dream: "梦想",
+    future: "未来",
+    goal: "目标"
+  };
+
+  return dictionary[wordText] || wordText;
+}
+
+function splitTranslation(translation, targetLength) {
+  const parts = translation.split(/(?<=。)/).map((part) => part.trim()).filter(Boolean);
+  if (parts.length >= targetLength) {
+    return parts.slice(0, targetLength);
+  }
+
+  return Array.from({ length: targetLength }, (_, index) => parts[index] || translation);
+}
+
+const unitPicker = document.querySelector("#unitPicker");
+let storyTabs = [];
 const levelTitle = document.querySelector("#levelTitle");
 const bestStars = document.querySelector("#bestStars");
 const pageArt = document.querySelector("#pageArt");
@@ -338,8 +514,10 @@ function renderPage() {
   levelTitle.textContent = `${unit.unit} - Level ${activePageIndex + 1}`;
   bestStars.textContent = makeStars(stars);
   storyTitle.textContent = level.title;
-  renderSentenceWords(level.lines);
-  translationText.textContent = level.translation;
+  renderSentenceWords(level);
+  if (translationText) {
+    translationText.textContent = level.translation;
+  }
   focusText.textContent = level.focus;
   sourceText.textContent = unit.source;
   pageCount.textContent = `${unit.title} · ${activePageIndex + 1} / ${unit.levels.length}`;
@@ -357,7 +535,7 @@ function renderPage() {
   speakPage.disabled = !isPlayable;
   recordButton.disabled = !isPlayable;
   paywallNotice.hidden = isPlayable;
-  paywallNotice.textContent = "Unit 1 默认免费开放。请输入 30 元付费激活码解锁后续单元。";
+  paywallNotice.textContent = "Unit 1-20 默认免费开放。请输入 30 元付费激活码解锁 Unit 21-30。";
   resetScoreCard();
   clearReadingHighlight();
 }
@@ -404,7 +582,9 @@ function getLessonScene(title) {
   return scenes[title] || { sky: "✨", main: "📘", props: "😊", label: "当前课文场景" };
 }
 
-function renderSentenceWords(lines) {
+function renderSentenceWords(level) {
+  const lines = level.lines;
+  const translationLines = level.translationLines || splitTranslation(level.translation, lines.length);
   currentWordRanges = [];
   let wordIndex = 0;
   let charOffset = 0;
@@ -412,27 +592,33 @@ function renderSentenceWords(lines) {
   sentenceList.innerHTML = lines
     .map((line, lineIndex) => {
       const html = line.replace(/[A-Za-z']+|[^A-Za-z']+/g, (part) => {
-      const start = charOffset;
-      charOffset += part.length;
+        const start = charOffset;
+        charOffset += part.length;
 
-      if (!/[A-Za-z']+/.test(part)) {
-        return part;
-      }
+        if (!/[A-Za-z']+/.test(part)) {
+          return part;
+        }
 
-      currentWordRanges.push({
-        start,
-        end: charOffset,
-        index: wordIndex
+        currentWordRanges.push({
+          start,
+          end: charOffset,
+          index: wordIndex,
+          lineIndex
+        });
+
+        return `<span class="read-word" data-word-index="${wordIndex++}">${part}</span>`;
       });
 
-      return `<span class="read-word" data-word-index="${wordIndex++}">${part}</span>`;
-    });
-
       if (lineIndex < lines.length - 1) {
-      charOffset += 1;
-    }
+        charOffset += 1;
+      }
 
-      return `<p class="sentence">${html}</p>`;
+      return `
+        <div class="sentence-pair">
+          <p class="sentence">${html}</p>
+          <p class="sentence-translation" data-line-index="${lineIndex}">${translationLines[lineIndex] || ""}</p>
+        </div>
+      `;
     })
     .join("");
 }
@@ -519,6 +705,11 @@ function shuffleOptions(options) {
 }
 
 function renderUnitTabs() {
+  unitPicker.innerHTML = units
+    .map((unit, index) => `<button class="story-tab" type="button" data-story="${index}">${unit.unit}</button>`)
+    .join("");
+  storyTabs = unitPicker.querySelectorAll(".story-tab");
+
   storyTabs.forEach((tab) => {
     const index = Number(tab.dataset.story);
     const unlocked = canUseUnit(index);
@@ -592,11 +783,17 @@ function highlightWordAt(charIndex) {
   document.querySelectorAll(".read-word").forEach((word) => {
     word.classList.toggle("is-speaking", Number(word.dataset.wordIndex) === range.index);
   });
+  document.querySelectorAll(".sentence-translation").forEach((translation) => {
+    translation.classList.toggle("is-speaking", Number(translation.dataset.lineIndex) === range.lineIndex);
+  });
 }
 
 function clearReadingHighlight() {
   document.querySelectorAll(".read-word.is-speaking").forEach((word) => {
     word.classList.remove("is-speaking");
+  });
+  document.querySelectorAll(".sentence-translation.is-speaking").forEach((translation) => {
+    translation.classList.remove("is-speaking");
   });
 }
 
@@ -942,8 +1139,13 @@ function answerQuiz(button) {
   playFeedbackSound(isCorrect ? "success" : "sad");
 }
 
-storyTabs.forEach((tab) => {
-  tab.addEventListener("click", () => setActiveStory(Number(tab.dataset.story)));
+unitPicker.addEventListener("click", (event) => {
+  const tab = event.target.closest(".story-tab");
+  if (!tab) {
+    return;
+  }
+
+  setActiveStory(Number(tab.dataset.story));
 });
 
 document.addEventListener("pointerdown", unlockSound, { once: true });

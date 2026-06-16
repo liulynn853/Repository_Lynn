@@ -1,6 +1,6 @@
 const accessPlans = {
-  free: { label: "免费版：Unit 1-20", maxUnit: 19 },
-  paid: { label: "付费版：Unit 1-30", maxUnit: 29 }
+  free: { label: "免费版：全部 30 个单元", maxUnit: 29 },
+  paid: { label: "免费版：全部 30 个单元", maxUnit: 29 }
 };
 
 const activationCodes = {
@@ -585,7 +585,7 @@ function renderPage() {
   speakPage.disabled = !isPlayable;
   recordButton.disabled = !isPlayable;
   paywallNotice.hidden = isPlayable;
-  paywallNotice.textContent = "Unit 1-20 默认免费开放。请输入 30 元付费激活码解锁 Unit 21-30。";
+  paywallNotice.textContent = "全部 30 个单元已免费开放。";
   resetScoreCard();
   clearReadingHighlight();
 }
@@ -1198,17 +1198,8 @@ function unlockNextLevel() {
 }
 
 function activateAccess() {
-  const code = activationCode.value.trim().toUpperCase();
-  const plan = activationCodes[code];
-
-  if (!plan) {
-    activationMessage.textContent = "激活码无效。付款后请确认输入的是完整激活码。";
-    activationMessage.className = "activation-message is-error";
-    return;
-  }
-
-  saveAccessPlan(plan);
-  activationMessage.textContent = `激活成功：${accessPlans[plan].label}`;
+  saveAccessPlan("free");
+  activationMessage.textContent = "无需激活，全部 30 个单元已经免费开放。";
   activationMessage.className = "activation-message is-success";
   renderPage();
 }

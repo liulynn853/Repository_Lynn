@@ -215,6 +215,8 @@ function applyAdvancedPassages() {
       level.translation = translationMap[level.title] || `${level.translation} 这篇短文加入了更多细节，帮助孩子练习理解完整语境。`;
       level.translationLines = splitTranslation(level.translation, level.lines.length);
       level.focus = `${level.focus} · reading, meaning, phonics`;
+      level.patterns = buildLanguagePatterns(level);
+      level.grammar = buildGrammarPoints(level);
     });
   });
 }
@@ -392,6 +394,51 @@ function splitTranslation(translation, targetLength) {
   return Array.from({ length: targetLength }, (_, index) => parts[index] || translation);
 }
 
+function buildLanguagePatterns(level) {
+  const firstLine = level.lines[0];
+  const usefulLine = level.lines.find((line) => /\b(can|want|like|because|when|before|after)\b/i.test(line)) || level.lines[1];
+  return [
+    {
+      title: "描述主题",
+      pattern: firstLine.replace(/[A-Za-z']+$/, "..."),
+      explanation: "用完整句介绍人物、地点或主题，适合做短文开头。",
+      example: firstLine
+    },
+    {
+      title: "补充细节",
+      pattern: usefulLine,
+      explanation: "用时间、原因或动作补充信息，让句子更像三四年级阅读短文。",
+      example: usefulLine
+    }
+  ];
+}
+
+function buildGrammarPoints(level) {
+  const hasBecause = level.lines.some((line) => /\bbecause\b/i.test(line));
+  const hasModal = level.lines.some((line) => /\bcan\b/i.test(line));
+  const hasTime = level.lines.some((line) => /\b(before|after|when|today|morning|night)\b/i.test(line));
+  const points = [
+    {
+      title: "一般现在时",
+      explanation: "短文主要使用一般现在时，描述习惯、事实和当前情景。",
+      example: level.lines[0]
+    },
+    {
+      title: hasBecause ? "because 原因从句" : hasModal ? "can 表示能力" : hasTime ? "时间状语" : "形容词补充信息",
+      explanation: hasBecause
+        ? "because 后面说明原因，回答“为什么”。"
+        : hasModal
+          ? "can 后接动词原形，用来表达能力或可能。"
+          : hasTime
+            ? "before、after、when 等词可以说明动作发生的时间。"
+            : "形容词可以让名词和感受更具体。",
+      example: level.lines.find((line) => /\b(because|can|before|after|when|bright|fresh|happy|important)\b/i.test(line)) || level.lines[1]
+    }
+  ];
+
+  return points;
+}
+
 const unitPicker = document.querySelector("#unitPicker");
 let storyTabs = [];
 const levelTitle = document.querySelector("#levelTitle");
@@ -403,6 +450,8 @@ const sentenceList = document.querySelector("#sentenceList");
 const translationText = document.querySelector("#translationText");
 const focusText = document.querySelector("#focusText");
 const vocabularyList = document.querySelector("#vocabularyList");
+const patternList = document.querySelector("#patternList");
+const grammarList = document.querySelector("#grammarList");
 const quizQuestion = document.querySelector("#quizQuestion");
 const quizOptions = document.querySelector("#quizOptions");
 const quizResult = document.querySelector("#quizResult");
@@ -526,6 +575,7 @@ function renderPage() {
   renderLessonArt(level);
 
   renderVocabulary(level.vocabulary);
+  renderLanguageFocus(level);
   renderQuiz(level);
   renderUnitTabs();
   renderAccess();
@@ -638,9 +688,35 @@ function renderVocabulary(vocabulary) {
     .join("");
 }
 
+function renderLanguageFocus(level) {
+  patternList.innerHTML = level.patterns
+    .map(
+      (item) => `
+        <article class="language-item">
+          <strong>${item.title}</strong>
+          <code>${item.pattern}</code>
+          <p>${item.explanation}</p>
+          <small>例句：${item.example}</small>
+        </article>
+      `
+    )
+    .join("");
+  grammarList.innerHTML = level.grammar
+    .map(
+      (item) => `
+        <article class="language-item">
+          <strong>${item.title}</strong>
+          <p>${item.explanation}</p>
+          <small>例句：${item.example}</small>
+        </article>
+      `
+    )
+    .join("");
+}
+
 function renderQuiz(level) {
   const questions = buildQuizQuestions(level);
-  quizQuestion.textContent = "完成配音后，做 4 道小题检查理解、词汇和音标。";
+  quizQuestion.textContent = "完成配音后，做 6 道小题检查词汇、音标、句型、语法和理解。";
   quizResult.textContent = "";
   quizOptions.innerHTML = questions
     .map(
@@ -665,6 +741,8 @@ function buildQuizQuestions(level) {
   const vocab = level.vocabulary;
   const firstLine = level.lines[0];
   const lastLine = level.lines[level.lines.length - 1];
+  const pattern = level.patterns[0];
+  const grammar = level.grammar[1] || level.grammar[0];
   return [
     {
       prompt: `“${vocab[0].cn}” 对应哪个英文单词？`,
@@ -685,6 +763,16 @@ function buildQuizQuestions(level) {
       prompt: "短文最后想表达什么？",
       answer: lastLine,
       options: shuffleOptions([lastLine, level.lines[2], level.lines[3]])
+    },
+    {
+      prompt: `哪个句子符合“${pattern.title}”这个句型？`,
+      answer: pattern.example,
+      options: shuffleOptions([pattern.example, level.lines[2], level.lines[4]])
+    },
+    {
+      prompt: `语法点“${grammar.title}”对应哪一句？`,
+      answer: grammar.example,
+      options: shuffleOptions([grammar.example, level.lines[0], lastLine])
     }
   ];
 }

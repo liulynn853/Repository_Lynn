@@ -1,0 +1,178 @@
+body.mobile-page {
+  background: linear-gradient(180deg, #fff7df 0%, #eef4ff 100%);
+}
+
+.mobile-shell {
+  width: min(100% - 20px, 560px);
+  margin: 0 auto;
+  padding: 14px 0 104px;
+}
+
+.mobile-hero,
+.mobile-card,
+.mobile-reader,
+.mobile-level-bar {
+  border: 3px solid rgba(36, 48, 65, 0.08);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12px 28px rgba(87, 60, 18, 0.12);
+}
+
+.mobile-hero {
+  padding: 22px;
+}
+
+.mobile-hero h1 {
+  margin-bottom: 10px;
+  font-size: clamp(2.1rem, 12vw, 3.4rem);
+}
+
+.mobile-hero p:last-child,
+.mobile-card p,
+.mobile-record p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.mobile-card {
+  margin-top: 14px;
+  padding: 18px;
+}
+
+.access-card {
+  display: grid;
+  gap: 14px;
+}
+
+.compact-activation {
+  padding: 14px;
+}
+
+.mobile-units {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+  scroll-snap-type: x proximity;
+}
+
+.mobile-units .story-tab {
+  flex: 0 0 auto;
+  min-width: 86px;
+  scroll-snap-align: start;
+}
+
+.mobile-level-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px;
+}
+
+.mobile-level-bar h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.mobile-reader {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 16px;
+}
+
+.mobile-art {
+  min-height: 220px;
+}
+
+.mobile-title-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.mobile-title-row h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 7vw, 2rem);
+}
+
+.mobile-page .sentence-list {
+  gap: 12px;
+}
+
+.mobile-page .sentence {
+  padding: 13px 14px;
+  font-size: clamp(1.12rem, 5.2vw, 1.45rem);
+}
+
+.mobile-page .sentence-translation {
+  font-size: clamp(0.98rem, 4.4vw, 1.18rem);
+}
+
+.mobile-record {
+  margin-top: 0;
+}
+
+.mobile-page .record-actions,
+.mobile-page .quiz-options,
+.mobile-page .vocab-grid,
+.mobile-page .language-focus-grid {
+  grid-template-columns: 1fr;
+}
+
+.mobile-page .record-actions {
+  display: grid;
+}
+
+.mobile-page .record-button,
+.mobile-page .control-button,
+.mobile-page .download-link {
+  width: 100%;
+}
+
+.mobile-page .quiz-card {
+  padding: 16px;
+}
+
+.source-card {
+  margin-bottom: 16px;
+}
+
+.mobile-bottom-nav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 12px max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  border-top: 1px solid rgba(36, 48, 65, 0.1);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 -10px 30px rgba(36, 48, 65, 0.12);
+}
+
+.mobile-bottom-nav .control-button {
+  min-height: 50px;
+  padding: 0 10px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 380px) {
+  .mobile-shell {
+    width: min(100% - 14px, 560px);
+  }
+
+  .mobile-bottom-nav {
+    gap: 6px;
+  }
+
+  .mobile-bottom-nav .control-button {
+    font-size: 0.86rem;
+  }
+}

@@ -94,6 +94,11 @@ h2 {
   line-height: 1.7;
 }
 
+.mobile-entry {
+  width: fit-content;
+  margin-top: 18px;
+}
+
 .mascot {
   display: grid;
   flex: 0 0 150px;

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Level C 配音闯关 - 手机版</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="mobile.css" />
+  </head>
+  <body class="mobile-page">
+    <main class="mobile-shell">
+      <header class="mobile-hero">
+        <p class="eyebrow">Mobile Reading Voice</p>
+        <h1>Level C 配音闯关</h1>
+        <p>手机单列版：听读、高亮、录音评分、词汇语法和小测试。</p>
+      </header>
+
+      <section class="mobile-card access-card" aria-labelledby="pay-title">
+        <div>
+          <p class="eyebrow">Free Access</p>
+          <h2 id="pay-title">全部 30 个单元免费开放</h2>
+          <p class="access-line">当前权限：<strong id="accessBadge">免费版：全部 30 个单元</strong></p>
+        </div>
+        <div class="activation-box compact-activation">
+          <label for="activationCode">激活码</label>
+          <input id="activationCode" type="text" inputmode="latin" placeholder="现在无需激活码" disabled />
+          <button class="control-button primary" id="activateButton" type="button">确认免费开放</button>
+          <p class="activation-message" id="activationMessage">全部内容已免费开放。</p>
+        </div>
+      </section>
+
+      <nav class="mobile-units" id="unitPicker" aria-label="选择单元">
+        <button class="story-tab is-active" type="button" data-story="0">Unit 1</button>
+      </nav>
+
+      <section class="mobile-level-bar" aria-label="闯关进度">
+        <div>
+          <p class="eyebrow">当前关卡</p>
+          <h2 id="levelTitle">Unit 1 - Level 1</h2>
+        </div>
+        <div class="stars" id="bestStars" aria-label="本关最高星级">☆☆☆</div>
+      </section>
+
+      <section class="mobile-reader" aria-live="polite">
+        <div class="page-art mobile-art" id="pageArt" role="img" aria-label="当前课文插图"></div>
+        <div class="page-count" id="pageCount">Page 1 / 8</div>
+        <div class="mobile-title-row">
+          <h2 id="storyTitle">I Wake Up</h2>
+          <button class="control-button primary listen-button" id="speakPage" type="button">听一遍</button>
+        </div>
+        <div class="sentence-list" id="sentenceList">
+          <div class="sentence-pair">
+            <p class="sentence">I wake up early.</p>
+            <p class="sentence-translation">我早上很早醒来。</p>
+          </div>
+        </div>
+        <div class="inline-record-panel mobile-record" aria-labelledby="voice-title">
+          <p class="eyebrow">配音录制</p>
+          <h2 id="voice-title">读完句子，马上录音</h2>
+          <p id="recordHint">点击“开始录音”，读出当前 Level。停止录音后会自动评分。</p>
+          <div class="record-actions">
+            <button class="record-button" id="recordButton" type="button">开始录音</button>
+            <button class="control-button" id="playRecording" type="button" disabled>播放录音</button>
+            <a class="download-link is-disabled" id="downloadRecording" href="#" download="level-c-voice.webm">下载录音</a>
+          </div>
+          <div class="score-card" id="scoreCard" hidden>
+            <p class="score-stars" id="scoreStars">☆☆☆</p>
+            <p id="scoreText">录音后自动评分。</p>
+            <small id="scoreDetails"></small>
+          </div>
+          <p class="paywall-notice" id="paywallNotice" hidden>全部 30 个单元已免费开放。</p>
+          <audio id="audioPlayback" controls hidden></audio>
+        </div>
+      </section>
+
+      <section class="mobile-card">
+        <p class="eyebrow">重点词汇</p>
+        <p id="focusText">wake, see, sun · reading, meaning, phonics</p>
+      </section>
+
+      <section class="mobile-card">
+        <p class="eyebrow">Word Focus</p>
+        <h2>词汇、句型和语法重点</h2>
+        <div class="vocab-grid" id="vocabularyList"></div>
+        <div class="language-focus-grid">
+          <section class="language-focus-card">
+            <p class="eyebrow">Sentence Pattern</p>
+            <h3>句型讲解</h3>
+            <div id="patternList"></div>
+          </section>
+          <section class="language-focus-card">
+            <p class="eyebrow">Grammar Point</p>
+            <h3>语法讲解</h3>
+            <div id="grammarList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="mobile-card quiz-section" aria-labelledby="quiz-title">
+        <p class="eyebrow">小测试</p>
+        <h2 id="quiz-title">测一测学会了吗？</h2>
+        <p id="quizQuestion">完成配音后，再做小题检测词汇、句型、语法和理解。</p>
+        <div class="quiz-options" id="quizOptions"></div>
+        <p class="quiz-result" id="quizResult" aria-live="polite"></p>
+      </section>
+
+      <section class="mobile-card source-card">
+        <h2>内容与授权说明</h2>
+        <p id="sourceText">网页中的课文为原创 Level C 风格文本，可用于本项目商业 MVP。</p>
+      </section>
+    </main>
+
+    <nav class="mobile-bottom-nav" aria-label="Level 控制">
+      <button class="control-button" id="prevPage" type="button">上一页</button>
+      <a class="control-button" href="index.html">桌面版</a>
+      <button class="control-button primary" id="nextPage" type="button">下一页</button>
+    </nav>
+
+    <script src="app.js"></script>
+  </body>
+</html>

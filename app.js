@@ -847,19 +847,58 @@ function speakCurrentPage() {
     return;
   }
 
-  stopSpeech();
-  const utterance = new SpeechSynthesisUtterance(getCurrentText());
-  utterance.lang = "en-US";
-  utterance.rate = 0.72;
-  utterance.pitch = 1.08;
-  utterance.addEventListener("boundary", (event) => {
-    if (event.name === "word" || typeof event.charIndex === "number") {
-      highlightWordAt(event.charIndex);
+  const startSpeaking = () => {
+    clearReadingHighlight();
+    const utterance = new SpeechSynthesisUtterance(getCurrentText());
+    const englishVoice = getEnglishVoice();
+    if (englishVoice) {
+      utterance.voice = englishVoice;
     }
-  });
-  utterance.addEventListener("end", clearReadingHighlight);
-  utterance.addEventListener("error", clearReadingHighlight);
-  window.speechSynthesis.speak(utterance);
+    utterance.lang = "en-US";
+    utterance.rate = 0.72;
+    utterance.pitch = 1.08;
+    utterance.addEventListener("start", () => {
+      recordHint.textContent = "正在朗读，请看英文和中文高亮。";
+      speakPage.textContent = "朗读中";
+      speakPage.disabled = true;
+    });
+    utterance.addEventListener("boundary", (event) => {
+      if (event.name === "word" || typeof event.charIndex === "number") {
+        highlightWordAt(event.charIndex);
+      }
+    });
+    utterance.addEventListener("end", () => {
+      clearReadingHighlight();
+      speakPage.textContent = "听一遍";
+      speakPage.disabled = false;
+      recordHint.textContent = "朗读完成。现在可以跟读并录音。";
+    });
+    utterance.addEventListener("error", () => {
+      clearReadingHighlight();
+      speakPage.textContent = "听一遍";
+      speakPage.disabled = false;
+      recordHint.textContent = "手机浏览器没有成功播放朗读，请确认未静音，或换 Chrome / Edge 再试。";
+    });
+    window.speechSynthesis.speak(utterance);
+    window.speechSynthesis.resume();
+  };
+
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    window.setTimeout(startSpeaking, 120);
+    return;
+  }
+
+  startSpeaking();
+}
+
+function getEnglishVoice() {
+  const voices = window.speechSynthesis?.getVoices?.() || [];
+  return (
+    voices.find((voice) => voice.lang === "en-US") ||
+    voices.find((voice) => voice.lang?.toLowerCase().startsWith("en")) ||
+    null
+  );
 }
 
 function highlightWordAt(charIndex) {

@@ -1,0 +1,23 @@
+table view_dingdanID
+	lineageTag: 552fbd15-53e2-481f-9d9c-93920dbd6703
+	sourceLineageTag: [dbo].[view_dingdanID]
+
+	column 订单ID
+		dataType: string
+		sourceProviderType: varchar
+		lineageTag: 6d8d007b-384c-4d2c-b49e-3d5be280fe07
+		sourceLineageTag: 订单ID
+		summarizeBy: none
+		sourceColumn: 订单ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition view_dingdanID-8d2f8a58-a951-4ed8-998f-1a93b9f21684 = entity
+		mode: directLake
+		source
+			entityName: view_dingdanID
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation IsTableInBiModel = True
+

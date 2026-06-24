@@ -1,0 +1,52 @@
+table SalesOrder
+	lineageTag: 574b6c66-c18f-43eb-be8e-0ca7cc7da7ac
+	sourceLineageTag: [dbo].[SalesOrder]
+
+	column Channel
+		dataType: string
+		lineageTag: e8998472-e405-4909-a14e-79cd0bc84d78
+		sourceLineageTag: Channel
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrderLineKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 24d4ae0c-5216-45ce-a4c8-d2c269df83fa
+		sourceLineageTag: SalesOrderLineKey
+		summarizeBy: count
+		sourceColumn: SalesOrderLineKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales_Order
+		dataType: string
+		lineageTag: 0ab6dc58-6e6a-499b-9949-50a0b30c4040
+		sourceLineageTag: Sales_Order
+		summarizeBy: none
+		sourceColumn: Sales_Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales_Order_Line
+		dataType: string
+		lineageTag: ca63cfeb-bc11-404c-abea-85bb090db84e
+		sourceLineageTag: Sales_Order_Line
+		summarizeBy: none
+		sourceColumn: Sales_Order_Line
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SalesOrder-8937ed73-67b9-4a59-95a3-5ce51468c1f9 = entity
+		mode: directLake
+		source
+			entityName: SalesOrder
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
+	annotation IsTableInBiModel = True
+

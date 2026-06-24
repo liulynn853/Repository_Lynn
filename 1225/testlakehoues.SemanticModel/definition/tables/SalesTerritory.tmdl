@@ -1,0 +1,52 @@
+table SalesTerritory
+	lineageTag: 9ff1f3c0-08e6-411c-84c5-baf718f3816a
+	sourceLineageTag: [dbo].[SalesTerritory]
+
+	column Country
+		dataType: string
+		lineageTag: 125ec72d-ec99-42ef-a9f2-90cfc11158da
+		sourceLineageTag: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Group
+		dataType: string
+		lineageTag: 40026207-6fc9-4958-b4b6-41e583994817
+		sourceLineageTag: Group
+		summarizeBy: none
+		sourceColumn: Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 88d35c67-be46-4919-96a4-3740ef36c699
+		sourceLineageTag: Region
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesTerritoryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 58356f49-6da9-4525-9759-5485f0da2558
+		sourceLineageTag: SalesTerritoryKey
+		summarizeBy: count
+		sourceColumn: SalesTerritoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SalesTerritory-3d91aed9-14b5-4edd-bfa3-208cb262d6f6 = entity
+		mode: directLake
+		source
+			entityName: SalesTerritory
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
+	annotation IsTableInBiModel = True
+

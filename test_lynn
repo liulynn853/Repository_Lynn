@@ -298,11 +298,7 @@
         <div class="subtitle">Document ID: SAF-PROP-2023-001 | Version: 1.0 | Date: <span id="current-date"></span></div>
     </header>
     
-    <section id="executive-summary">
-        <h2>1. Executive Summary</h2>
-        <p>We have identified a fragmented approach to how internal stakeholders request and receive critical business statistics (e.g., Pro/Premium stats, consumption data, audit logs). This ad-hoc process leads to redundant data pulls, inconsistent metric definitions, and inefficient use of engineering resources.</p>
-        <p>This proposal outlines a plan to consolidate existing needs, standardize our reporting mechanisms, and establish a single source of truth for key business metrics. We seek approval to implement the proposed standardized solution.</p>
-    </section>
+
     
     <section id="current-challenges">
         <h2>2. Current Challenges</h2>

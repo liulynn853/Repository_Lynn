@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "PBIChargingReport_vadmin(1)"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bfec8715-1c0a-b29f-4629-64e9fccf7834"
+  }
+}

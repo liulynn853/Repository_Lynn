@@ -1,0 +1,42 @@
+{
+  "config": "{\"version\":\"5.67\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY25SU10\",\"version\":{\"visual\":\"2.1.0\",\"report\":\"3.0.0\",\"page\":\"2.3.0\"},\"type\":2}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "layoutOptimization": 0,
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY25SU10",
+            "path": "BaseThemes/CY25SU10.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{}",
+      "displayName": "Page 1",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "1893e5cae1e443314699",
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"81174973f9b5d382949e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":329.6020165786029,\"y\":218.4109748412429,\"z\":0,\"width\":758.4817489941345,\"height\":389.1686460807601,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"?key=MjczNDU2MjcwSVJTVVpNak15TlRBNE.Name\"},{\"queryRef\":\"?key=MjczNDU2MjcwSVJTVVpNak15TlRBNE.Value\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"?\",\"Entity\":\"?key=MjczNDU2MjcwSVJTVVpNak15TlRBNE\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"?\"}},\"Property\":\"Name\"},\"Name\":\"?key=MjczNDU2MjcwSVJTVVpNak15TlRBNE.Name\",\"NativeReferenceName\":\"Name\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"?\"}},\"Property\":\"Value\"},\"Name\":\"?key=MjczNDU2MjcwSVJTVVpNak15TlRBNE.Value\",\"NativeReferenceName\":\"Value\"}]},\"drillFilterOtherVisuals\":true}}",
+          "filters": "[]",
+          "height": 389.17,
+          "width": 758.48,
+          "x": 329.60,
+          "y": 218.41,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
+    }
+  ]
+}

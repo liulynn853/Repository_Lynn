@@ -1,0 +1,25 @@
+table Customer
+	lineageTag: b76b7c85-784b-4334-b970-fd8804061aed
+	sourceLineageTag: [dbo].[Customer]
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: c878a21d-a2ca-430a-b803-167d413958ad
+		sourceLineageTag: CustomerKey
+		summarizeBy: count
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customer-9b042778-b49a-492c-a809-b4fc1b28dcd2 = entity
+		mode: directLake
+		source
+			entityName: Customer
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
+	annotation IsTableInBiModel = True
+

@@ -1,0 +1,312 @@
+table DimDate
+	lineageTag: 5d3371d9-2422-4721-970f-3770972ad48b
+	sourceLineageTag: [dbo].[DimDate]
+
+	column DateKey
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 740ccd7c-4766-4558-923d-66473db33e3e
+		sourceLineageTag: DateKey
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		dataType: int64
+		formatString: 0
+		lineageTag: cfe7dc6e-a49e-448b-a205-de8402f6ec73
+		sourceLineageTag: Day
+		summarizeBy: sum
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayName
+		dataType: string
+		lineageTag: 239133e9-896d-43cc-91d3-1d6719715b75
+		sourceLineageTag: DayName
+		summarizeBy: none
+		sourceColumn: DayName
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeek
+		dataType: int64
+		formatString: 0
+		lineageTag: e7eb561b-d975-4a9f-aa01-414761389f07
+		sourceLineageTag: DayOfWeek
+		summarizeBy: sum
+		sourceColumn: DayOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeekInMonth
+		dataType: int64
+		formatString: 0
+		lineageTag: de82f435-179b-4a35-8783-ad7cf81c061e
+		sourceLineageTag: DayOfWeekInMonth
+		summarizeBy: sum
+		sourceColumn: DayOfWeekInMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 73f50ca5-58be-4281-ad59-cb6b7c7f3485
+		sourceLineageTag: DayOfYear
+		summarizeBy: sum
+		sourceColumn: DayOfYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column DaySuffix
+		dataType: string
+		lineageTag: db3f3b94-9f8d-4be6-8b35-8b9d2aee23d0
+		sourceLineageTag: DaySuffix
+		summarizeBy: none
+		sourceColumn: DaySuffix
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstOfMonth
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bb96a9c1-710f-4763-b9d7-2f6d5bed6cc4
+		sourceLineageTag: FirstOfMonth
+		summarizeBy: none
+		sourceColumn: FirstOfMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstOfNextMonth
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 89c4a984-ae54-4347-be3e-6aae10f5c8f6
+		sourceLineageTag: FirstOfNextMonth
+		summarizeBy: none
+		sourceColumn: FirstOfNextMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstOfQuarter
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a476bf37-be49-4f4e-85ef-e505fbe7553d
+		sourceLineageTag: FirstOfQuarter
+		summarizeBy: none
+		sourceColumn: FirstOfQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstOfWeek
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c35e85a6-2b75-412f-9e9a-17afd5c924c6
+		sourceLineageTag: FirstOfWeek
+		summarizeBy: none
+		sourceColumn: FirstOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstOfYear
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: eafee7ec-58bb-4f7c-951b-6b2a7c53730d
+		sourceLineageTag: FirstOfYear
+		summarizeBy: none
+		sourceColumn: FirstOfYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column Has53ISOWeeks
+		dataType: int64
+		formatString: 0
+		lineageTag: 85ded701-f877-4d42-96f5-9dc584e9d70b
+		sourceLineageTag: Has53ISOWeeks
+		summarizeBy: sum
+		sourceColumn: Has53ISOWeeks
+
+		annotation SummarizationSetBy = Automatic
+
+	column Has53Weeks
+		dataType: int64
+		formatString: 0
+		lineageTag: d75798c9-392a-4b81-97b8-a4a4642416dc
+		sourceLineageTag: Has53Weeks
+		summarizeBy: sum
+		sourceColumn: Has53Weeks
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISOYear
+		dataType: int64
+		formatString: 0
+		lineageTag: b74ab400-8053-43ee-9025-e1cddac7f865
+		sourceLineageTag: ISOYear
+		summarizeBy: sum
+		sourceColumn: ISOYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISOweek
+		dataType: int64
+		formatString: 0
+		lineageTag: 8224367b-08bf-4239-a949-144214e071d3
+		sourceLineageTag: ISOweek
+		summarizeBy: sum
+		sourceColumn: ISOweek
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsLeapYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 8b3f9ad0-5254-445c-813b-fb003cb4e96c
+		sourceLineageTag: IsLeapYear
+		summarizeBy: sum
+		sourceColumn: IsLeapYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsWeekend
+		dataType: int64
+		formatString: 0
+		lineageTag: 6445664b-ec27-4c32-a4b2-833e24152af3
+		sourceLineageTag: IsWeekend
+		summarizeBy: sum
+		sourceColumn: IsWeekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastOfMonth
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9329e279-d78a-4d30-9a84-2c0e05abbbbb
+		sourceLineageTag: LastOfMonth
+		summarizeBy: none
+		sourceColumn: LastOfMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastOfNextMonth
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 786d15f0-6fed-4fbc-a9c4-a89da6b078cf
+		sourceLineageTag: LastOfNextMonth
+		summarizeBy: none
+		sourceColumn: LastOfNextMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastOfQuarter
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 62d0dc6d-d3e3-47e8-ad5e-d15de51a00d2
+		sourceLineageTag: LastOfQuarter
+		summarizeBy: none
+		sourceColumn: LastOfQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastOfWeek
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: af72a345-646d-4b85-8081-38e353884a73
+		sourceLineageTag: LastOfWeek
+		summarizeBy: none
+		sourceColumn: LastOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastOfYear
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9f2edf90-4ef2-42c8-aa7b-44d2ce656ce2
+		sourceLineageTag: LastOfYear
+		summarizeBy: none
+		sourceColumn: LastOfYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 53993cc8-6e04-4af4-ac57-ba6aaa8af754
+		sourceLineageTag: Month
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		lineageTag: f002386d-4b93-4b2d-828d-064446ca153d
+		sourceLineageTag: MonthName
+		summarizeBy: none
+		sourceColumn: MonthName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: fc8ebf55-1c5d-4283-b9a0-a0bfa17d0b25
+		sourceLineageTag: Quarter
+		summarizeBy: sum
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week
+		dataType: int64
+		formatString: 0
+		lineageTag: 5fd5fdef-1b91-43c5-9014-c08fdb542a8d
+		sourceLineageTag: Week
+		summarizeBy: sum
+		sourceColumn: Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekOfMonth
+		dataType: int64
+		formatString: 0
+		lineageTag: 941da9fb-e5d6-492f-9928-677da2e9e573
+		sourceLineageTag: WeekOfMonth
+		summarizeBy: sum
+		sourceColumn: WeekOfMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column YYYYMMDDKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 713f29b9-cb2e-4754-b39c-f298cd9cdc67
+		sourceLineageTag: YYYYMMDDKey
+		summarizeBy: count
+		sourceColumn: YYYYMMDDKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 751a8e4d-b4c5-4e8a-97ff-61f66a962f4d
+		sourceLineageTag: Year
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate-320cfd0b-fec8-4cd9-9820-27e20bde7583 = entity
+		mode: directLake
+		source
+			entityName: DimDate
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+
+	annotation IsTableInBiModel = True
+
